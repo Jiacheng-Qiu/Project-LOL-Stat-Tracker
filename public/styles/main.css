@@ -1,0 +1,28 @@
+body ***REMOVED***
+    background: #81CDDC;
+***REMOVED***
+
+.navbar ***REMOVED***
+    background-color: #000000;
+    color: white;
+***REMOVED***
+
+.page-container ***REMOVED***
+    margin-top: 75px;
+***REMOVED***
+
+.dropdown-menu-right ***REMOVED***
+    left: -180px;
+***REMOVED***
+
+#listPage .card-title, #listPage .card-subtitle ***REMOVED***
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+***REMOVED***
+
+.card***REMOVED***
+    margin: 50px;
+    background-color: #CCCCCC;
+***REMOVED***
