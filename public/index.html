@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <title>LOL Stat Tracker</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">LOL Stat Tracker</a>
+    <div class="dropdown pull-xs-right">
+        <button class="btn bmd-btn-icon" type="button">
+            <i class="material-icons">search</i>
+        </button>
+        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons">dehaze</i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lr1">
+            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#changePasswordDialog">Change Password</button>
+            <button class="dropdown-item" type="button">Log out</button>
+            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#deleteAccountDialog">Delete Account</button>
+        </div>
+    </div>
+  </nav>
+  <div id="mainPage" class="container page-container">
+    <div id="listPage" class="container page-container">
+        <span> Logged in as: User 1</span>
+        <div class="topnav">
+            <input type="text" placeholder="Search Player">
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Player 1</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Total played: 1603 games</h6>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Player 2</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Total played: 123 games</h6>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Player 3</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> Total played: 7342 games</h6>
+            </div>
+        </div>
+  </div>
+  </div>
+
+<div class="modal fade" id="changePasswordDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Password</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group bmd-form-group">
+                    <label for="oldPass">Old password:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="newPass">New Password:</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group bmd-form-group">
+                    <label for="reenterPass">Confirm Password:</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                <button id="submitEditQuote" type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAccountDialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Account</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your account? You cannot undo this action.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                <button id="submitDeleteQuote" type="button" class="btn btn-primary" data-dismiss="modal">CONFIRM</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>$("body").bootstrapMaterialDesign();</script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>

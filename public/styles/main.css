@@ -1,0 +1,28 @@
+body {
+    background: #81CDDC;
+}
+
+.navbar {
+    background-color: #000000;
+    color: white;
+}
+
+.page-container {
+    margin-top: 75px;
+}
+
+.dropdown-menu-right {
+    left: -180px;
+}
+
+#listPage .card-title, #listPage .card-subtitle {
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.card{
+    margin: 50px;
+    background-color: #CCCCCC;
+}
