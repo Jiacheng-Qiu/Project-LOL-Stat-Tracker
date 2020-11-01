@@ -1,0 +1,10 @@
+***REMOVED***
+  "hosting": ***REMOVED***
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  ***REMOVED***
+***REMOVED***
