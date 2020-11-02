@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <title>League Stat Tracker</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">League Stat Tracker</a>
+  </nav>
+  <div id="mainPage" class="container page-container">
+    <span id="accountInfo"> Doesn't have an account yet? </span> 
+    <button id="registerRedirect" type="button" class="btn">Register</button>
+
+    <div class="form-group">
+        <label for="loginAccount" class="bmd-label-floating">Account</label>
+        <input type="text" class="form-control" id="loginAccount">
+    </div>
+    <div class="form-group">
+        <label for="loginPassword" class="bmd-label-floating">Password</label>
+        <input type="password" class="form-control" id="loginPassword">
+    </div>  
+    <button id="login" type="button" class="btn">Login</button>
+  </div>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>$("body").bootstrapMaterialDesign();</script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>

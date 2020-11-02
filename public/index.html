@@ -7,52 +7,48 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
   <link rel="stylesheet" href="styles/main.css">
-  <title>LOL Stat Tracker</title>
+  <title>League Stat Tracker</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">LOL Stat Tracker</a>
-    <div class="dropdown pull-xs-right">
-        <button class="btn bmd-btn-icon" type="button">
-            <i class="material-icons">search</i>
-        </button>
-        <button class="btn bmd-btn-icon dropdown-toggle" type="button" id="lr1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="material-icons">dehaze</i>
-        </button>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lr1">
-            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#changePasswordDialog">Change Password</button>
-            <button class="dropdown-item" type="button">Log out</button>
-            <button class="dropdown-item" type="button" data-toggle="modal" data-target="#deleteAccountDialog">Delete Account</button>
+
+  <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+      <header class="bmd-layout-header">
+        <div class="navbar navbar-dark bg-faded fixed-top justify-content-start">
+          <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2">
+            <span class="sr-only">Toggle drawer</span>
+            <i class="material-icons">menu</i>
+          </button>
+
+          <a class="navbar-brand" href="#">League Stat Tracker</a>
+          
+          <button id="searchRedirect" class="btn bmd-btn-icon" type="button">
+             <i class="material-icons">search</i>
+          </button>
         </div>
-    </div>
-  </nav>
-  <div id="mainPage" class="container page-container">
-    <div id="listPage" class="container page-container">
-        <span> Logged in as: User 1</span>
-        <div class="topnav">
-            <input type="text" placeholder="Search Player">
-        </div>
-        <div class="card">
+      </header>
+      <div id="dw-s2" class="bmd-layout-drawer bg-faded">
+        <ul class="list-group">
+          <a id="changePassword" class="list-group-item" data-toggle="modal" data-target="#changePasswordDialog"><i class="material-icons">lock</i>Change password</a>
+          <a id="deleteAccount" class="list-group-item"  data-toggle="modal" data-target="#deleteAccountDialog"><i class="material-icons">person</i>Delete account</a>
+          <a id="signOut"class="list-group-item"><i class="material-icons">login</i>Sign out</a>
+        </ul>
+      </div>
+      <main class="bmd-layout-content">
+          <div id="listPage" class="container page-container">
+            <span id="loginInfo"> You are not logged in.
+                <button id="loginRedirect" type="button" class="btn">Login here</button>
+            </span>
+
+            <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Player 1</h5>
                 <h6 class="card-subtitle mb-2 text-muted"> Total played: 1603 games</h6>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Player 2</h5>
-                <h6 class="card-subtitle mb-2 text-muted"> Total played: 123 games</h6>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Player 3</h5>
-                <h6 class="card-subtitle mb-2 text-muted"> Total played: 7342 games</h6>
-            </div>
-        </div>
-  </div>
-  </div>
+          </div>
+      </main>
+    </div>
 
 <div class="modal fade" id="changePasswordDialog" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
