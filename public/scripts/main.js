@@ -14,6 +14,24 @@ rhit.fbAuthManager = null;
 // Change password
 rhit.AccountController = class{
     constructor() {
+        // Adjust user text according to stat
+        if (rhit.fbAuthManager.isSignedIn) {
+            document.querySelector("#loginInfo").textContent = "Currently logged in as: "+ rhit.fbAuthManager.uid;
+        } else {
+            document.querySelector("#loginInfo").textContent = "You are not logged in.";
+            var button = document.createElement('button');
+            button.id = "loginRedirect";
+            button.type = "button";
+            button.classList = "btn";
+            button.textContent = "Login here";
+            document.querySelector("#loginInfo").appendChild(button);
+
+            document.querySelector("#loginRedirect").onclick = (event) => {
+                console.log("login redirect");
+                window.location.href = "/login.html";
+            };
+        }
+
         document.querySelector("#submitEditPass").onclick = (event) => {
             const pass = document.querySelector("#newPass");
             const reenter = document.querySelector("#reenterPass");
@@ -40,24 +58,6 @@ rhit.AccountController = class{
 
 rhit.ListPageController = class{
     constructor() {
-        // Adjust user text according to stat
-        if (rhit.fbAuthManager.isSignedIn) {
-            document.querySelector("#loginInfo").textContent = "Currently logged in as: "+ rhit.fbAuthManager.uid;
-        } else {
-            document.querySelector("#loginInfo").textContent = "You are not logged in.";
-            var button = document.createElement('button');
-            button.id = "loginRedirect";
-            button.type = "button";
-            button.classList = "btn";
-            button.textContent = "Login here";
-            document.querySelector("#loginInfo").appendChild(button);
-
-            document.querySelector("#loginRedirect").onclick = (event) => {
-                console.log("login redirect");
-                window.location.href = "/login.html";
-            };
-        }
-
         // Search redirect
         document.querySelector("#searchRedirect").onclick = (event) => {
             console.log("Redirecting to search page");
