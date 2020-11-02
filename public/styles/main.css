@@ -63,7 +63,23 @@ body ***REMOVED***
     margin-right: 0.2rem;
 ***REMOVED***
 
-#searchRedirect ***REMOVED***
-    position: fixed;
-    right: 20px;
+#searchPage > container ***REMOVED***
+    width: 100%;
+***REMOVED***
+
+#searchText ***REMOVED***
+    margin-left: 25%;
+    width: 40%;
+    border-radius: 10px;
+***REMOVED***
+
+#searchSubmit ***REMOVED***
+    padding: 0 20px;
+    background: orange;
+    border-radius: 10px;
+***REMOVED***
+
+.dropdown ***REMOVED***
+    width: 100%;
+    margin-left: 25%;
 ***REMOVED***
