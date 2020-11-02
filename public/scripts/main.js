@@ -11,6 +11,33 @@ var rhit = rhit || {};
 rhit.fbPlayersManager = null;
 rhit.fbAuthManager = null;
 
+// Change password
+rhit.AccountController = class{
+    constructor() {
+        document.querySelector("#submitEditPass").onclick = (event) => {
+            const pass = document.querySelector("#newPass");
+            const reenter = document.querySelector("#reenterPass");
+            if (pass.value == reenter.value) {
+                rhit.fbAuthManager.changePassword(pass.value);
+            } else {
+                // Send warning
+                console.log("New passwords don't match");
+            }
+        }
+
+        // Logout
+        document.querySelector("#signOut").onclick = (event) => {
+            console.log("Sign out");
+            rhit.fbAuthManager.signOut();
+        }
+        // Delete account
+        document.querySelector("#submitDelete").onclick = (event) => {
+            console.log("Delete Account");
+            rhit.fbAuthManager.deleteAccount();
+        }
+    }
+}
+
 rhit.ListPageController = class{
     constructor() {
         // Adjust user text according to stat
@@ -31,26 +58,13 @@ rhit.ListPageController = class{
             };
         }
 
-        // Change password
-        document.querySelector("#submitEditPass").onclick = (event) => {
-            if (document.querySelector("#newPass").value == document.querySelector("#reenterPass").value) {
-                rhit.fbAuthManager.changePassword(document.querySelector("#newPass").value);
-            } else {
-                // Send warning
-                console.log("new password don't match");
-            }
+        // Search redirect
+        document.querySelector("#searchRedirect").onclick = (event) => {
+            console.log("Redirecting to search page");
+            window.location.href = "/search.html";
         }
 
-        // Logout
-        document.querySelector("#signOut").onclick = (event) => {
-            console.log("Sign out");
-            rhit.fbAuthManager.signOut();
-        }
-        // Delete account
-        document.querySelector("#submitDelete").onclick = (event) => {
-            console.log("Delete Account");
-            rhit.fbAuthManager.deleteAccount();
-        }
+        new rhit.AccountController();
     }
 }
 
@@ -88,6 +102,12 @@ rhit.RegisterPageController = class{
     }
 }
 
+rhit.SearchPageController = class{
+    constructor() {
+        new rhit.AccountController();
+    }
+}
+
 rhit.initializePage = function() {
     if (document.querySelector("#loginPage")) {
 		console.log("On the login page");
@@ -100,6 +120,10 @@ rhit.initializePage = function() {
     if (document.querySelector("#listPage")) {
 		console.log("On the list page");
 		new rhit.ListPageController();
+    }
+    if (document.querySelector("#searchPage")) {
+		console.log("On the search page");
+		new rhit.SearchPageController();
 	}
 }
 
