@@ -1,5 +1,5 @@
 body {
-    background: #81CDDC;
+    background: #888888;
 }
 
 .navbar {
@@ -9,10 +9,7 @@ body {
 
 .page-container {
     margin-top: 75px;
-}
-
-.dropdown-menu-right {
-    left: -180px;
+    width: 100%;
 }
 
 #listPage .card-title, #listPage .card-subtitle {
@@ -25,4 +22,47 @@ body {
 .card{
     margin: 50px;
     background-color: #CCCCCC;
+}
+
+#loginInfo {
+    display: block;
+    width:100%;
+    text-align: center;
+}
+
+#login, #register {
+    color: white;
+    background: orange;
+    font-size: 1.1em;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+
+#loginRedirect, #registerRedirect {
+    color: blue;
+    padding: 10px 15px;
+}
+
+.bmd-layout-content{
+    height: 100vh;
+}
+
+.bmd-layout-drawer > ul {
+    background-color: #cccccc;
+}
+
+.bmd-layout-drawer>.list-group .list-group-item {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.list-group-item :first-child {
+    margin-right: 0.2rem;
+}
+
+#searchRedirect {
+    position: fixed;
+    right: 20px;
 }
