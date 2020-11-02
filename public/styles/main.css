@@ -22,6 +22,7 @@ body {
 .card{
     margin: 50px;
     background-color: #CCCCCC;
+    border-radius: 25px;
 }
 
 #loginInfo {
