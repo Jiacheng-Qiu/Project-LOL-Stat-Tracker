@@ -14,6 +14,24 @@ rhit.fbAuthManager = null;
 // Change password
 rhit.AccountController = class***REMOVED***
     constructor() ***REMOVED***
+        // Adjust user text according to stat
+        if (rhit.fbAuthManager.isSignedIn) ***REMOVED***
+            document.querySelector("#loginInfo").textContent = "Currently logged in as: "+ rhit.fbAuthManager.uid;
+        ***REMOVED*** else ***REMOVED***
+            document.querySelector("#loginInfo").textContent = "You are not logged in.";
+            var button = document.createElement('button');
+            button.id = "loginRedirect";
+            button.type = "button";
+            button.classList = "btn";
+            button.textContent = "Login here";
+            document.querySelector("#loginInfo").appendChild(button);
+
+            document.querySelector("#loginRedirect").onclick = (event) => ***REMOVED***
+                console.log("login redirect");
+                window.location.href = "/login.html";
+            ***REMOVED***;
+        ***REMOVED***
+
         document.querySelector("#submitEditPass").onclick = (event) => ***REMOVED***
             const pass = document.querySelector("#newPass");
             const reenter = document.querySelector("#reenterPass");
@@ -40,24 +58,6 @@ rhit.AccountController = class***REMOVED***
 
 rhit.ListPageController = class***REMOVED***
     constructor() ***REMOVED***
-        // Adjust user text according to stat
-        if (rhit.fbAuthManager.isSignedIn) ***REMOVED***
-            document.querySelector("#loginInfo").textContent = "Currently logged in as: "+ rhit.fbAuthManager.uid;
-        ***REMOVED*** else ***REMOVED***
-            document.querySelector("#loginInfo").textContent = "You are not logged in.";
-            var button = document.createElement('button');
-            button.id = "loginRedirect";
-            button.type = "button";
-            button.classList = "btn";
-            button.textContent = "Login here";
-            document.querySelector("#loginInfo").appendChild(button);
-
-            document.querySelector("#loginRedirect").onclick = (event) => ***REMOVED***
-                console.log("login redirect");
-                window.location.href = "/login.html";
-            ***REMOVED***;
-        ***REMOVED***
-
         // Search redirect
         document.querySelector("#searchRedirect").onclick = (event) => ***REMOVED***
             console.log("Redirecting to search page");
