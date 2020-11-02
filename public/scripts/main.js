@@ -11,6 +11,33 @@ var rhit = rhit || ***REMOVED******REMOVED***;
 rhit.fbPlayersManager = null;
 rhit.fbAuthManager = null;
 
+// Change password
+rhit.AccountController = class***REMOVED***
+    constructor() ***REMOVED***
+        document.querySelector("#submitEditPass").onclick = (event) => ***REMOVED***
+            const pass = document.querySelector("#newPass");
+            const reenter = document.querySelector("#reenterPass");
+            if (pass.value == reenter.value) ***REMOVED***
+                rhit.fbAuthManager.changePassword(pass.value);
+            ***REMOVED*** else ***REMOVED***
+                // Send warning
+                console.log("New passwords don't match");
+            ***REMOVED***
+        ***REMOVED***
+
+        // Logout
+        document.querySelector("#signOut").onclick = (event) => ***REMOVED***
+            console.log("Sign out");
+            rhit.fbAuthManager.signOut();
+        ***REMOVED***
+        // Delete account
+        document.querySelector("#submitDelete").onclick = (event) => ***REMOVED***
+            console.log("Delete Account");
+            rhit.fbAuthManager.deleteAccount();
+        ***REMOVED***
+    ***REMOVED***
+***REMOVED***
+
 rhit.ListPageController = class***REMOVED***
     constructor() ***REMOVED***
         // Adjust user text according to stat
@@ -31,26 +58,13 @@ rhit.ListPageController = class***REMOVED***
             ***REMOVED***;
         ***REMOVED***
 
-        // Change password
-        document.querySelector("#submitEditPass").onclick = (event) => ***REMOVED***
-            if (document.querySelector("#newPass").value == document.querySelector("#reenterPass").value) ***REMOVED***
-                rhit.fbAuthManager.changePassword(document.querySelector("#newPass").value);
-            ***REMOVED*** else ***REMOVED***
-                // Send warning
-                console.log("new password don't match");
-            ***REMOVED***
+        // Search redirect
+        document.querySelector("#searchRedirect").onclick = (event) => ***REMOVED***
+            console.log("Redirecting to search page");
+            window.location.href = "/search.html";
         ***REMOVED***
 
-        // Logout
-        document.querySelector("#signOut").onclick = (event) => ***REMOVED***
-            console.log("Sign out");
-            rhit.fbAuthManager.signOut();
-        ***REMOVED***
-        // Delete account
-        document.querySelector("#submitDelete").onclick = (event) => ***REMOVED***
-            console.log("Delete Account");
-            rhit.fbAuthManager.deleteAccount();
-        ***REMOVED***
+        new rhit.AccountController();
     ***REMOVED***
 ***REMOVED***
 
@@ -88,6 +102,12 @@ rhit.RegisterPageController = class***REMOVED***
     ***REMOVED***
 ***REMOVED***
 
+rhit.SearchPageController = class***REMOVED***
+    constructor() ***REMOVED***
+        new rhit.AccountController();
+    ***REMOVED***
+***REMOVED***
+
 rhit.initializePage = function() ***REMOVED***
     if (document.querySelector("#loginPage")) ***REMOVED***
 		console.log("On the login page");
@@ -100,6 +120,10 @@ rhit.initializePage = function() ***REMOVED***
     if (document.querySelector("#listPage")) ***REMOVED***
 		console.log("On the list page");
 		new rhit.ListPageController();
+    ***REMOVED***
+    if (document.querySelector("#searchPage")) ***REMOVED***
+		console.log("On the search page");
+		new rhit.SearchPageController();
 	***REMOVED***
 ***REMOVED***
 
