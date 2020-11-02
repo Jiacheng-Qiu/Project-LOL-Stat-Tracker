@@ -1,5 +1,5 @@
 body ***REMOVED***
-    background: #81CDDC;
+    background: #888888;
 ***REMOVED***
 
 .navbar ***REMOVED***
@@ -9,10 +9,7 @@ body ***REMOVED***
 
 .page-container ***REMOVED***
     margin-top: 75px;
-***REMOVED***
-
-.dropdown-menu-right ***REMOVED***
-    left: -180px;
+    width: 100%;
 ***REMOVED***
 
 #listPage .card-title, #listPage .card-subtitle ***REMOVED***
@@ -25,4 +22,47 @@ body ***REMOVED***
 .card***REMOVED***
     margin: 50px;
     background-color: #CCCCCC;
+***REMOVED***
+
+#loginInfo ***REMOVED***
+    display: block;
+    width:100%;
+    text-align: center;
+***REMOVED***
+
+#login, #register ***REMOVED***
+    color: white;
+    background: orange;
+    font-size: 1.1em;
+    padding: 10px 30px;
+    border-radius: 5px;
+***REMOVED***
+
+#loginRedirect, #registerRedirect ***REMOVED***
+    color: blue;
+    padding: 10px 15px;
+***REMOVED***
+
+.bmd-layout-content***REMOVED***
+    height: 100vh;
+***REMOVED***
+
+.bmd-layout-drawer > ul ***REMOVED***
+    background-color: #cccccc;
+***REMOVED***
+
+.bmd-layout-drawer>.list-group .list-group-item ***REMOVED***
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+***REMOVED***
+
+.list-group-item :first-child ***REMOVED***
+    margin-right: 0.2rem;
+***REMOVED***
+
+#searchRedirect ***REMOVED***
+    position: fixed;
+    right: 20px;
 ***REMOVED***
