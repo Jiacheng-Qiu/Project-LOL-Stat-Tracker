@@ -105,7 +105,31 @@ rhit.RegisterPageController = class{
 rhit.SearchPageController = class{
     constructor() {
         new rhit.AccountController();
+
+        let region = "";
+        let searchText = "";
+        // Deal with dropdown selection (solution adapted)
+        $('#regionSearch a').on('click', function(){
+            region = $(this).text();
+            document.querySelector("#dropdownMenuButton").innerHTML = region;
+        });
+
+        // Takes info when search
+        document.querySelector("#searchSubmit").onclick = (event) => {
+            console.log("Searching");
+            searchText = document.querySelector("#searchText").value;
+            if (region && searchText){
+                rhit.searchPlayer(searchText, region);
+            } else {
+                console.log("One of the two necessary information is missing!");
+            }
+        };
+
     }
+}
+
+rhit.searchPlayer = function(playerName, region) {
+    // TODO: to be combined with didi functions for results
 }
 
 rhit.initializePage = function() {
