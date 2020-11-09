@@ -105,7 +105,31 @@ rhit.RegisterPageController = class***REMOVED***
 rhit.SearchPageController = class***REMOVED***
     constructor() ***REMOVED***
         new rhit.AccountController();
+
+        let region = "";
+        let searchText = "";
+        // Deal with dropdown selection (solution adapted)
+        $('#regionSearch a').on('click', function()***REMOVED***
+            region = $(this).text();
+            document.querySelector("#dropdownMenuButton").innerHTML = region;
+        ***REMOVED***);
+
+        // Takes info when search
+        document.querySelector("#searchSubmit").onclick = (event) => ***REMOVED***
+            console.log("Searching");
+            searchText = document.querySelector("#searchText").value;
+            if (region && searchText)***REMOVED***
+                rhit.searchPlayer(searchText, region);
+            ***REMOVED*** else ***REMOVED***
+                console.log("One of the two necessary information is missing!");
+            ***REMOVED***
+        ***REMOVED***;
+
     ***REMOVED***
+***REMOVED***
+
+rhit.searchPlayer = function(playerName, region) ***REMOVED***
+    // TODO: to be combined with didi functions for results
 ***REMOVED***
 
 rhit.initializePage = function() ***REMOVED***
