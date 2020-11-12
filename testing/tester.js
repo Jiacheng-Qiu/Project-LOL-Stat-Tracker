@@ -49,6 +49,7 @@ var app = firebase.initializeApp({
 // Initialize Cloud Functions through Firebase
 var functions = firebase.functions();
 
+firebase.functions().useEmulator("localhost", 5001);
 var testCall = firebase.functions().httpsCallable("getSummonerFull");
 
 let print = (args) => console.log(args);
@@ -63,15 +64,15 @@ let main = async () => {
   // let smt = await testFunc({ summonerName: "PerfectSniper", region: "EUN1" });
   // console.log(smt);
   // console.log("finish");
-  // testCall({ summonerName: "PerfECTsniper", region: "eun1" })
-  //   .then(function (result) {
-  //     // Read result of the Cloud Function.
-  //     console.warn(result.data);
-  //     // ...
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  testCall({ summonerName: "PerfECTsniper", region: "eun1", fetchMatch: true })
+    .then(function (result) {
+      // Read result of the Cloud Function.
+      console.warn(result.data);
+      // ...
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   // console.log(extractKeys(["a", "b"], { a: 0, b: 1, c: 2 }));
   // console.log("\n\n");
   // console.log(await getSummonerByName("NA1", "fwiedwice"));
@@ -90,7 +91,7 @@ let main = async () => {
   //     0
   //   )
   // );
-  console.log(await getMatchByID("eun1", "2630126100"));
+  // console.log(await getMatchByID("eun1", "2630126100"));
 };
 
 main();
