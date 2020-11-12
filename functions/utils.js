@@ -69,7 +69,7 @@ exports.parseMatch = (rawMatch) => ***REMOVED***
   let teams = rawMatch["teams"];
   teams.forEach((team) => ***REMOVED***
     let teamID = "" + team["teamId"];
-    let win = team["win"] == "Win";
+    let win = team["win"] === "Win";
     match["teams"][teamID] = win;
   ***REMOVED***);
 
