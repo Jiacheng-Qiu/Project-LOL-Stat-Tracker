@@ -39,51 +39,77 @@ let ***REMOVED***
 //   functions.logger.info("Hello logs!", ***REMOVED***structuredData: true***REMOVED***);
 //   response.send("Hello from Firebase!");
 // ***REMOVED***);
+const LOGARGS = ***REMOVED*** structuredData: true ***REMOVED***;
+const COOLDOWN = 60;
+let print = (arg) => ***REMOVED***
+  functions.logger.info(arg);
+***REMOVED***;
 
 /**
- * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1"***REMOVED***
+ * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1", fetchMatch: false***REMOVED***
  * @param  ***REMOVED******REMOVED*** context   auth context
  *
  * initial fetching of summoner data first time they are in the DB
  */
 exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REMOVED***
-  let summonerName = data.summonerName;
+  let summonerName = data.summonerName.trim().toLowerCase();
   let region = data.region;
+  let fetchMatch = data.fetchMatch;
 
   let dbSummonerID = region + summonerName;
+  print("dbSummonerID:", dbSummonerID);
   try ***REMOVED***
-    let summonerInfo = await getSummonerByName(region, summonerName);
-    if (summonerInfo.err) ***REMOVED***
-      return ***REMOVED*** err: summonerInfo.err ***REMOVED***;
-    ***REMOVED***
-    let summonerId = summonerInfo[FB_FIELD_SUMMONER_ID];
+    let dbRef = await admin
+      .firestore()
+      .collection(FB_COL_SUMMONERS)
+      .doc(dbSummonerID)
+      .get();
 
-    let summonerLeagues = await getSummonerLeagueByID(region, summonerId);
+    let summonerID = "placeholder";
+    let summonerInfo = ***REMOVED******REMOVED***;
+
+    // if ref doesnt exist, we pull the data
+    // if ref exists, and it's been more than COOLDOWN since we last pulled, we pull the data
+    // if ref exists, and it's been less than COOLDOWN, we return what we have stored in the DB
+    print("checking if dbRef exists");
+    if (!dbRef.exists) ***REMOVED***
+      print("New summoner entry");
+      summonerInfo = await getSummonerByName(region, summonerName);
+      if (summonerInfo.err) ***REMOVED***
+        print("getSummonerByName Error:");
+        print(summonerInfo.err);
+        return ***REMOVED*** err: summonerInfo.err ***REMOVED***;
+      ***REMOVED***
+      summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
+    ***REMOVED*** else ***REMOVED***
+      print("Exists in DB already");
+      let data = dbRef.data();
+
+      // 60 second timer currently, can't pull summoner profile too often for fear of rate limit
+      let lastPulled = data[FB_FIELD_TIMESTAMP]["seconds"];
+      let current = Math.round(Date.now() / 1000);
+      print("Last fetched: " + (current - lastPulled) + " seconds ago.");
+      if (current - lastPulled < COOLDOWN) ***REMOVED***
+        print(
+          "Can't fetch twice in a minute, returning locally stored values."
+        );
+        return data;
+      ***REMOVED***
+      summonerID = data[FB_FIELD_SUMMONER_ID];
+    ***REMOVED***
+
+    // get summoner leagues (SOLO/DUO, FLEX)
+    print("Getting summoner leagues");
+    let summonerLeagues = await getSummonerLeagueByID(region, summonerID);
     if (summonerLeagues.err) ***REMOVED***
+      print("getSummonerLeagueByID Error:");
+      print(summonerLeagues.err);
       return ***REMOVED*** err: summonerLeagues.err ***REMOVED***;
     ***REMOVED***
 
-    let desiredFields = [
-      FB_FIELD_SUMMONER_TIER,
-      FB_FIELD_SUMMONER_RANK,
-      FB_FIELD_SUMMONER_WINS,
-      FB_FIELD_SUMMONER_LOSSES,
-      FB_FIELD_SUMMONER_LP,
-    ];
-
-    let summonerLeaguesFiltered = ***REMOVED******REMOVED***;
-
-    summonerLeagues.map((summonerLeague) => ***REMOVED***
-      let queueType = summonerLeague[FB_FIELD_QUEUE_TYPE];
-      summonerLeaguesFiltered[queueType] = extractKeys(
-        desiredFields,
-        summonerLeague
-      );
-    ***REMOVED***);
-
     let summoner = ***REMOVED***
       ...summonerInfo,
-      [FB_FIELD_SUMMONER_LEAGUES]: summonerLeaguesFiltered,
+      [FB_FIELD_SUMMONER_LEAGUES]: summonerLeagues,
       [FB_FIELD_TIMESTAMP]: admin.firestore.Timestamp.now(),
     ***REMOVED***;
 
@@ -91,18 +117,15 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
       .firestore()
       .collection(FB_COL_SUMMONERS)
       .doc(dbSummonerID)
-      .set(summoner);
+      .set(summoner, ***REMOVED*** merge: true ***REMOVED***);
 
+    if (fetchMatch) ***REMOVED***
+      console.log("fetchmatch");
+    ***REMOVED***
     return summoner;
   ***REMOVED*** catch (err) ***REMOVED***
+    print("getSummonerFull Error:");
+    print(err);
     return ***REMOVED*** err ***REMOVED***;
   ***REMOVED***
-***REMOVED***);
-
-/**
- * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1"***REMOVED***
- * @param  ***REMOVED******REMOVED*** context   auth context
- */
-exports.retrieveProfile = functions.https.onCall(async (data, context) => ***REMOVED***
-  // 15 second cooldown for testing
 ***REMOVED***);
