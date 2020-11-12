@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
   <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.css" />
   <link rel="stylesheet" href="styles/main.css">
   <title>League Stat Tracker</title>
 </head>
@@ -20,7 +21,7 @@
             <i class="material-icons">menu</i>
           </button>
 
-          <a class="navbar-brand" href="#">League Stat Tracker</a>
+          <a class="navbar-brand" href="/">League Stat Tracker</a>
           
           <button id="searchRedirect" class="btn bmd-btn-icon" type="button">
              <i class="material-icons">search</i>
@@ -41,11 +42,28 @@
             </span>
 
             <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Player 1</h5>
-                <h6 class="card-subtitle mb-2 text-muted"> Total played: 1603 games</h6>
+                <div class="card-body" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <h5 class="card-title">Player 1</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"> Total played: 1603 games</h6>
+                </div>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <h5 class="card-title">Victory</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <hr>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Champion: Yasuo | Summoner: Empertoast | KDA: 0/50/1 | Damage: 294</h6>
+                    </div>
+                </div>
             </div>
-        </div>
+            
           </div>
       </main>
     </div>
@@ -58,10 +76,6 @@
             </div>
             <div class="modal-body">
                 <div class="form-group bmd-form-group">
-                    <label for="oldPass">Old password:</label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="form-group bmd-form-group">
                     <label for="newPass">New Password:</label>
                     <input type="text" class="form-control">
                 </div>
@@ -72,7 +86,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                <button id="submitEditQuote" type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
+                <button id="submitEditPass" type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
             </div>
         </div>
     </div>
@@ -89,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
-                <button id="submitDeleteQuote" type="button" class="btn btn-primary" data-dismiss="modal">CONFIRM</button>
+                <button id="submitDelete" type="button" class="btn btn-primary" data-dismiss="modal">CONFIRM</button>
             </div>
         </div>
     </div>
@@ -104,6 +118,7 @@
   <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
   <script src="/__/firebase/7.18.0/firebase-firestore.js"></script>
   <script src="/__/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 

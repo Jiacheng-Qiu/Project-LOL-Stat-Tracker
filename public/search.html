@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="styles/bootstrap-material-design.min.css">
+  <link rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.css" />
+  <link rel="stylesheet" href="styles/main.css">
+  <title>League Stat Tracker</title>
+</head>
+
+<body>
+  <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay">
+    <header class="bmd-layout-header">
+      <div class="navbar navbar-dark bg-faded fixed-top justify-content-start">
+        <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s2">
+          <span class="sr-only">Toggle drawer</span>
+          <i class="material-icons">menu</i>
+        </button>
+
+        <a class="navbar-brand" href="/">League Stat Tracker</a>
+      </div>
+    </header>
+    <div id="dw-s2" class="bmd-layout-drawer bg-faded">
+      <ul class="list-group">
+        <a id="changePassword" class="list-group-item" data-toggle="modal" data-target="#changePasswordDialog"><i class="material-icons">lock</i>Change password</a>
+        <a id="deleteAccount" class="list-group-item"  data-toggle="modal" data-target="#deleteAccountDialog"><i class="material-icons">person</i>Delete account</a>
+        <a id="signOut"class="list-group-item"><i class="material-icons">login</i>Sign out</a>
+      </ul>
+    </div>
+    <main class="bmd-layout-content">
+      <div id="searchPage" class="container page-container">
+        <span id="loginInfo"> You are not logged in.
+          <button id="loginRedirect" type="button" class="btn">Login here</button>
+        </span>
+        <div class="container">
+             <input id="searchText" type="text" placeholder="Who are you looking for?">
+             <button id="searchSubmit" type="submit" class="btn btn-primary btn-outline-primary">
+              <i class="material-icons">search</i>
+            </button>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Select Region
+          </button>
+          <div id="regionSearch" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item">BR1</a>
+            <a class="dropdown-item">EUN1</a>
+            <a class="dropdown-item">EUW1</a>
+            <a class="dropdown-item">JP1</a>
+            <a class="dropdown-item">KR</a>
+            <a class="dropdown-item">LA1</a>
+            <a class="dropdown-item">LA2</a>
+            <a class="dropdown-item">NA1</a>
+            <a class="dropdown-item">OC1</a>
+            <a class="dropdown-item">TR1</a>
+            <a class="dropdown-item">RU</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<div class="modal fade" id="changePasswordDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Change Password</h5>
+          </div>
+          <div class="modal-body">
+              <div class="form-group bmd-form-group">
+                  <label for="newPass">New Password:</label>
+                  <input type="text" class="form-control">
+              </div>
+              <div class="form-group bmd-form-group">
+                  <label for="reenterPass">Confirm Password:</label>
+                  <input type="text" class="form-control">
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+              <button id="submitEditPass" type="button" class="btn btn-primary" data-dismiss="modal">SAVE</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteAccountDialog" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Delete Account</h5>
+          </div>
+          <div class="modal-body">
+              Are you sure you want to delete your account? You cannot undo this action.
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+              <button id="submitDelete" type="button" class="btn btn-primary" data-dismiss="modal">CONFIRM</button>
+          </div>
+      </div>
+  </div>
+</div>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/popper.js"></script>
+  <script src="scripts/bootstrap-material-design.js"></script>
+  <script>$("body").bootstrapMaterialDesign();</script>
+  <script src="/__/firebase/7.18.0/firebase-app.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-analytics.js"></script>
+  <script src="/__/firebase/7.18.0/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.7.0/firebase-ui-auth.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+
+</html>
