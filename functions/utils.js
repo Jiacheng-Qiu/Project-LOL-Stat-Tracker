@@ -6,6 +6,12 @@ let ***REMOVED***
   FB_COL_USERS,
   FB_COL_MATCHES,
   FB_COL_LIVE_MATCHES,
+  FB_FIELD_SUMMONER_TIER,
+  FB_FIELD_SUMMONER_RANK,
+  FB_FIELD_SUMMONER_WINS,
+  FB_FIELD_SUMMONER_LOSSES,
+  FB_FIELD_SUMMONER_LP,
+  FB_FIELD_QUEUE_TYPE,
 ***REMOVED*** = require("./constants");
 
 // constants
@@ -13,6 +19,8 @@ const KEY = require("./riotkey.json")["key"];
 const ARGS = ***REMOVED***
   "X-Riot-Token": KEY,
 ***REMOVED***;
+
+const MATCH_COUNT = 5;
 
 /**
  * @param  ***REMOVED******REMOVED*** keys    list of keys
@@ -57,8 +65,72 @@ exports.getSummonerLeagueByID = async (region, summonerID) => ***REMOVED***
     let requestURL = `https://$***REMOVED***region***REMOVED***.api.riotgames.com/lol/league/v4/entries/by-summoner/$***REMOVED***summonerID***REMOVED***`;
     let response = await req.get(requestURL).set(ARGS);
 
-    return response.body;
+    let desiredFields = [
+      FB_FIELD_SUMMONER_TIER,
+      FB_FIELD_SUMMONER_RANK,
+      FB_FIELD_SUMMONER_WINS,
+      FB_FIELD_SUMMONER_LOSSES,
+      FB_FIELD_SUMMONER_LP,
+    ];
+
+    let summonerLeaguesFiltered = ***REMOVED******REMOVED***;
+
+    response.body.map((summonerLeague) => ***REMOVED***
+      let queueType = summonerLeague[FB_FIELD_QUEUE_TYPE];
+      summonerLeaguesFiltered[queueType] = exports.extractKeys(
+        desiredFields,
+        summonerLeague
+      );
+    ***REMOVED***);
+
+    return summonerLeaguesFiltered;
   ***REMOVED*** catch (err) ***REMOVED***
     return ***REMOVED*** err: err ***REMOVED***;
+  ***REMOVED***
+***REMOVED***;
+/**
+ * @param  ***REMOVED******REMOVED*** region          region
+ * @param  ***REMOVED******REMOVED*** accountID       accountID of  player
+ * @param  ***REMOVED******REMOVED*** beginIndex=0    beginIndex of matches
+ */
+exports.getMatchesByAccountID = async (region, accountID, beginIndex = 0) => ***REMOVED***
+  let endIndex = beginIndex + MATCH_COUNT;
+
+  try ***REMOVED***
+    let requestURL =
+      `https://$***REMOVED***region***REMOVED***.api.riotgames.com/lol/match/v4/matchlists/by-account/` +
+      `$***REMOVED***accountID***REMOVED***?endIndex=$***REMOVED***endIndex***REMOVED***&beginIndex=$***REMOVED***beginIndex***REMOVED***`;
+    let response = await req.get(requestURL).set(ARGS);
+    return response.body;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** err ***REMOVED***;
+  ***REMOVED***
+***REMOVED***;
+
+/**
+ * @param  ***REMOVED******REMOVED*** region
+ * @param  ***REMOVED******REMOVED*** summonerID
+ */
+exports.getSummonerLiveGameByID = async (region, summonerID) => ***REMOVED***
+  try ***REMOVED***
+    let requestURL = `https://$***REMOVED***region***REMOVED***.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/$***REMOVED***summonerID***REMOVED***`;
+    let response = await req.get(requestURL).set(ARGS);
+    return response.body;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** err ***REMOVED***;
+  ***REMOVED***
+***REMOVED***;
+
+/**
+ * @param  ***REMOVED******REMOVED*** region
+ * @param  ***REMOVED******REMOVED*** matchID
+ */
+exports.getMatchByID = async (region, matchID) => ***REMOVED***
+  try ***REMOVED***
+    let requestURL = `https://$***REMOVED***region***REMOVED***.api.riotgames.com/lol/match/v4/matches/$***REMOVED***matchID***REMOVED***`;
+    let response = await req.get(requestURL).set(ARGS);
+    return response.body;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** err ***REMOVED***;
   ***REMOVED***
 ***REMOVED***;
