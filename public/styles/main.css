@@ -22,6 +22,7 @@ body {
 .card{
     margin: 50px;
     background-color: #CCCCCC;
+    border-radius: 25px;
 }
 
 #loginInfo {
@@ -65,4 +66,31 @@ body {
 #searchRedirect {
     position: fixed;
     right: 20px;
+}
+
+#searchPage > container {
+    width: 100%;
+}
+
+#searchText {
+    margin-left: 25%;
+    width: 40%;
+    border-radius: 10px;
+}
+
+#searchSubmit {
+    padding: 0 20px;
+    background: orange;
+    border-radius: 10px;
+}
+
+.dropdown {
+    width: 100%;
+    margin-left: 25%;
+}
+
+.dropdown > button {
+    margin-top: 20px;
+    background: orange;
+    padding: 5px 10px;
 }
