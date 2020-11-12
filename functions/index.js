@@ -16,6 +16,7 @@ let {
   FB_FIELD_SUMMONER_LP,
   FB_FIELD_QUEUE_TYPE,
   FB_FIELD_SUMMONER_LEAGUES,
+  FB_FIELD_SUMMONER_MATCHES,
 
   FB_FIELD_TIMESTAMP,
 
@@ -153,29 +154,54 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
       [FB_FIELD_TIMESTAMP]: admin.firestore.Timestamp.now(),
     };
 
+    if (fetchMatch) {
+      try {
+        let batch = admin.firestore().batch();
+        let rawMatches = await getMatchesByAccountID(region, accountID, 0);
+
+        let matchesData = await Promise.all(
+          rawMatches["matches"].map(async (rawMatch) => {
+            let matchData = await checkMatch(rawMatch["gameId"], region, batch);
+            return matchData;
+          })
+        );
+
+        print("Pushing batch with matches");
+        await batch.commit();
+        summoner[FB_FIELD_SUMMONER_MATCHES] = rawMatches["matches"].map(
+          (rawMatch) => region + rawMatch["gameId"]
+        );
+      } catch (err) {
+        print("Error fetching matches");
+      }
+    }
+
     await admin
       .firestore()
       .collection(FB_COL_SUMMONERS)
       .doc(dbSummonerID)
       .set(summoner, { merge: true });
 
-    if (fetchMatch) {
-      let batch = admin.firestore().batch();
-      let rawMatches = await getMatchesByAccountID(region, accountID, 0);
-
-      let matchesData = await Promise.all(
-        rawMatches["matches"].map(async (rawMatch) => {
-          let matchData = await checkMatch(rawMatch["gameId"], region, batch);
-          return matchData;
-        })
-      );
-
-      print("Pushing batch with matches");
-      await batch.commit();
-    }
     return summoner;
   } catch (err) {
     print("getSummonerFull Error:");
+    print(err);
+    return { err };
+  }
+});
+
+exports.setupUser = functions.auth.user().onCreate(async (user) => {
+  let uid = user.uid;
+  print(uid);
+  try {
+    let dbRef = admin.firestore().collection(FB_COL_USERS).doc(uid);
+
+    let basicUser = {
+      favorites: [],
+    };
+    await dbRef.set(basicUser);
+    print("Finished setting up user")
+  } catch (err) {
     print(err);
     return { err };
   }
