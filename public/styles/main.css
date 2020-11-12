@@ -22,6 +22,7 @@ body ***REMOVED***
 .card***REMOVED***
     margin: 50px;
     background-color: #CCCCCC;
+    border-radius: 25px;
 ***REMOVED***
 
 #loginInfo ***REMOVED***
@@ -65,4 +66,31 @@ body ***REMOVED***
 #searchRedirect ***REMOVED***
     position: fixed;
     right: 20px;
+***REMOVED***
+
+#searchPage > container ***REMOVED***
+    width: 100%;
+***REMOVED***
+
+#searchText ***REMOVED***
+    margin-left: 25%;
+    width: 40%;
+    border-radius: 10px;
+***REMOVED***
+
+#searchSubmit ***REMOVED***
+    padding: 0 20px;
+    background: orange;
+    border-radius: 10px;
+***REMOVED***
+
+.dropdown ***REMOVED***
+    width: 100%;
+    margin-left: 25%;
+***REMOVED***
+
+.dropdown > button ***REMOVED***
+    margin-top: 20px;
+    background: orange;
+    padding: 5px 10px;
 ***REMOVED***
