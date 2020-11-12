@@ -64,7 +64,7 @@ let main = async () => ***REMOVED***
   // let smt = await testFunc(***REMOVED*** summonerName: "PerfectSniper", region: "EUN1" ***REMOVED***);
   // console.log(smt);
   // console.log("finish");
-  testCall(***REMOVED*** summonerName: "PerfECTsniper", region: "eun1", fetchMatch: true ***REMOVED***)
+  testCall(***REMOVED*** summonerName: "fwiedwice", region: "na1", fetchMatch: true ***REMOVED***)
     .then(function (result) ***REMOVED***
       // Read result of the Cloud Function.
       console.warn(result.data);

@@ -16,6 +16,7 @@ let ***REMOVED***
   FB_FIELD_SUMMONER_LP,
   FB_FIELD_QUEUE_TYPE,
   FB_FIELD_SUMMONER_LEAGUES,
+  FB_FIELD_SUMMONER_MATCHES,
 
   FB_FIELD_TIMESTAMP,
 
@@ -153,29 +154,54 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
       [FB_FIELD_TIMESTAMP]: admin.firestore.Timestamp.now(),
     ***REMOVED***;
 
+    if (fetchMatch) ***REMOVED***
+      try ***REMOVED***
+        let batch = admin.firestore().batch();
+        let rawMatches = await getMatchesByAccountID(region, accountID, 0);
+
+        let matchesData = await Promise.all(
+          rawMatches["matches"].map(async (rawMatch) => ***REMOVED***
+            let matchData = await checkMatch(rawMatch["gameId"], region, batch);
+            return matchData;
+          ***REMOVED***)
+        );
+
+        print("Pushing batch with matches");
+        await batch.commit();
+        summoner[FB_FIELD_SUMMONER_MATCHES] = rawMatches["matches"].map(
+          (rawMatch) => region + rawMatch["gameId"]
+        );
+      ***REMOVED*** catch (err) ***REMOVED***
+        print("Error fetching matches");
+      ***REMOVED***
+    ***REMOVED***
+
     await admin
       .firestore()
       .collection(FB_COL_SUMMONERS)
       .doc(dbSummonerID)
       .set(summoner, ***REMOVED*** merge: true ***REMOVED***);
 
-    if (fetchMatch) ***REMOVED***
-      let batch = admin.firestore().batch();
-      let rawMatches = await getMatchesByAccountID(region, accountID, 0);
-
-      let matchesData = await Promise.all(
-        rawMatches["matches"].map(async (rawMatch) => ***REMOVED***
-          let matchData = await checkMatch(rawMatch["gameId"], region, batch);
-          return matchData;
-        ***REMOVED***)
-      );
-
-      print("Pushing batch with matches");
-      await batch.commit();
-    ***REMOVED***
     return summoner;
   ***REMOVED*** catch (err) ***REMOVED***
     print("getSummonerFull Error:");
+    print(err);
+    return ***REMOVED*** err ***REMOVED***;
+  ***REMOVED***
+***REMOVED***);
+
+exports.setupUser = functions.auth.user().onCreate(async (user) => ***REMOVED***
+  let uid = user.uid;
+  print(uid);
+  try ***REMOVED***
+    let dbRef = admin.firestore().collection(FB_COL_USERS).doc(uid);
+
+    let basicUser = ***REMOVED***
+      favorites: [],
+    ***REMOVED***;
+    await dbRef.set(basicUser);
+    print("Finished setting up user")
+  ***REMOVED*** catch (err) ***REMOVED***
     print(err);
     return ***REMOVED*** err ***REMOVED***;
   ***REMOVED***
