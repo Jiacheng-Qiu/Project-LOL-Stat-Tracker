@@ -5,6 +5,13 @@ let ***REMOVED***
   FB_COL_SUMMONERS,
   FB_COL_USERS,
   FB_COL_MATCHES,
+  FB_FIELD_MATCH_REGION,
+  FB_FIELD_MATCH_CREATION,
+  FB_FIELD_MATCH_DURATION,
+  FB_FIELD_MATCH_QUEUE_ID,
+  FB_FIELD_MATCH_MAP_ID,
+  FB_FIELD_MATCH_GAME_MODE,
+  FB_FIELD_MATCH_GAME_TYPE,
   FB_COL_LIVE_MATCHES,
   FB_FIELD_SUMMONER_TIER,
   FB_FIELD_SUMMONER_RANK,
@@ -20,7 +27,7 @@ const ARGS = ***REMOVED***
   "X-Riot-Token": KEY,
 ***REMOVED***;
 
-const MATCH_COUNT = 5;
+const MATCH_COUNT = 3;
 
 /**
  * @param  ***REMOVED******REMOVED*** keys    list of keys
@@ -36,6 +43,55 @@ exports.extractKeys = (keys, dict) => ***REMOVED***
 
   return res;
 ***REMOVED***;
+
+/**
+ * @param  ***REMOVED******REMOVED*** rawMatch
+ * 
+ * get desired match data format + fields
+ */
+exports.parseMatch = (rawMatch) => ***REMOVED***
+  let keys = [
+    FB_FIELD_MATCH_REGION,
+    FB_FIELD_MATCH_CREATION,
+    FB_FIELD_MATCH_DURATION,
+    FB_FIELD_MATCH_QUEUE_ID,
+    FB_FIELD_MATCH_MAP_ID,
+    FB_FIELD_MATCH_GAME_MODE,
+    FB_FIELD_MATCH_GAME_TYPE,
+  ];
+  let match = exports.extractKeys(keys, rawMatch);
+  match = ***REMOVED***
+    ...match,
+    participants: ***REMOVED******REMOVED***,
+    teams: ***REMOVED******REMOVED***,
+  ***REMOVED***;
+
+  let teams = rawMatch["teams"];
+  teams.forEach((team) => ***REMOVED***
+    let teamID = "" + team["teamId"];
+    let win = team["win"] == "Win";
+    match["teams"][teamID] = win;
+  ***REMOVED***);
+
+  // get player identity
+  let participantIdentities = rawMatch["participantIdentities"];
+  participantIdentities.forEach((participant) => ***REMOVED***
+    let participantID = "" + participant["participantId"];
+    match["participants"][participantID] = participant;
+  ***REMOVED***);
+
+  // get player stats
+  let participantGameData = rawMatch["participants"];
+  participantGameData.forEach((participant) => ***REMOVED***
+    delete participant["timeline"];
+
+    let participantID = "" + participant["participantId"];
+    match["participants"][participantID]["gameData"] = participant;
+  ***REMOVED***);
+
+  return match;
+***REMOVED***;
+
 /**
  * @param  ***REMOVED******REMOVED*** region          region of player (NA1, EUN1, etc...)
  * @param  ***REMOVED******REMOVED*** summonerName    summoner name of player (FwiedWice, Emperdust, etc...)

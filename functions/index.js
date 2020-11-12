@@ -8,6 +8,7 @@ admin.initializeApp();
 let ***REMOVED***
   FB_COL_SUMMONERS,
   FB_FIELD_SUMMONER_ID,
+  FB_FIELD_ACCOUNT_ID,
   FB_FIELD_SUMMONER_TIER,
   FB_FIELD_SUMMONER_RANK,
   FB_FIELD_SUMMONER_WINS,
@@ -30,6 +31,9 @@ let ***REMOVED***
   extractKeys,
   getSummonerByName,
   getSummonerLeagueByID,
+  getMatchByID,
+  getMatchesByAccountID,
+  parseMatch,
 ***REMOVED*** = require("./utils");
 
 // // Create and Deploy Your First Cloud Functions
@@ -40,9 +44,43 @@ let ***REMOVED***
 //   response.send("Hello from Firebase!");
 // ***REMOVED***);
 const LOGARGS = ***REMOVED*** structuredData: true ***REMOVED***;
-const COOLDOWN = 60;
+const COOLDOWN = 15;
+
 let print = (arg) => ***REMOVED***
   functions.logger.info(arg);
+***REMOVED***;
+
+// promise.all
+// store array of matches
+let checkMatch = async (matchID, region, batch) => ***REMOVED***
+  let dbMatchID = region + matchID;
+  try ***REMOVED***
+    let dbRef = await admin
+      .firestore()
+      .collection(FB_COL_MATCHES)
+      .doc(dbMatchID)
+      .get();
+
+    print("checking if match dbRef exists");
+    if (!dbRef.exists) ***REMOVED***
+      print("match does not exist in DB");
+
+      let data = await getMatchByID(region, matchID);
+      data = parseMatch(data);
+      const matchRef = admin
+        .firestore()
+        .collection(FB_COL_MATCHES)
+        .doc(dbMatchID);
+      batch.set(matchRef, data);
+
+      return data;
+    ***REMOVED*** else ***REMOVED***
+      print("match exists in DB");
+      return dbRef.data();
+    ***REMOVED***
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** err ***REMOVED***;
+  ***REMOVED***
 ***REMOVED***;
 
 /**
@@ -53,7 +91,7 @@ let print = (arg) => ***REMOVED***
  */
 exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REMOVED***
   let summonerName = data.summonerName.trim().toLowerCase();
-  let region = data.region;
+  let region = data.region.trim().toLowerCase();
   let fetchMatch = data.fetchMatch;
 
   let dbSummonerID = region + summonerName;
@@ -66,12 +104,13 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
       .get();
 
     let summonerID = "placeholder";
+    let accountID = "placeholder";
     let summonerInfo = ***REMOVED******REMOVED***;
 
     // if ref doesnt exist, we pull the data
     // if ref exists, and it's been more than COOLDOWN since we last pulled, we pull the data
     // if ref exists, and it's been less than COOLDOWN, we return what we have stored in the DB
-    print("checking if dbRef exists");
+    print("checking if summoner dbRef exists");
     if (!dbRef.exists) ***REMOVED***
       print("New summoner entry");
       summonerInfo = await getSummonerByName(region, summonerName);
@@ -80,23 +119,24 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
         print(summonerInfo.err);
         return ***REMOVED*** err: summonerInfo.err ***REMOVED***;
       ***REMOVED***
-      summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
     ***REMOVED*** else ***REMOVED***
       print("Exists in DB already");
-      let data = dbRef.data();
+      summonerInfo = dbRef.data();
 
       // 60 second timer currently, can't pull summoner profile too often for fear of rate limit
-      let lastPulled = data[FB_FIELD_TIMESTAMP]["seconds"];
+      let lastPulled = summonerInfo[FB_FIELD_TIMESTAMP]["seconds"];
       let current = Math.round(Date.now() / 1000);
       print("Last fetched: " + (current - lastPulled) + " seconds ago.");
       if (current - lastPulled < COOLDOWN) ***REMOVED***
         print(
           "Can't fetch twice in a minute, returning locally stored values."
         );
-        return data;
+        return summonerInfo;
       ***REMOVED***
-      summonerID = data[FB_FIELD_SUMMONER_ID];
     ***REMOVED***
+
+    summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
+    accountID = summonerInfo[FB_FIELD_ACCOUNT_ID];
 
     // get summoner leagues (SOLO/DUO, FLEX)
     print("Getting summoner leagues");
@@ -120,7 +160,18 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
       .set(summoner, ***REMOVED*** merge: true ***REMOVED***);
 
     if (fetchMatch) ***REMOVED***
-      console.log("fetchmatch");
+      let batch = admin.firestore().batch();
+      let rawMatches = await getMatchesByAccountID(region, accountID, 0);
+
+      let matchesData = await Promise.all(
+        rawMatches["matches"].map(async (rawMatch) => ***REMOVED***
+          let matchData = await checkMatch(rawMatch["gameId"], region, batch);
+          return matchData;
+        ***REMOVED***)
+      );
+
+      print("Pushing batch with matches");
+      await batch.commit();
     ***REMOVED***
     return summoner;
   ***REMOVED*** catch (err) ***REMOVED***
