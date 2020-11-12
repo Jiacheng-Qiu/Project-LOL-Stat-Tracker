@@ -1,4 +1,5 @@
 exports.FB_COL_SUMMONERS = "Summoners";
+exports.FB_FIELD_ACCOUNT_ID = "accountId";
 exports.FB_FIELD_SUMMONER_ID = "id";
 exports.FB_FIELD_SUMMONER_TIER = "tier";
 exports.FB_FIELD_SUMMONER_RANK = "rank";
@@ -15,6 +16,14 @@ exports.CONST_RANKED_FLEX = "RANKED_FLEX_SR";
 
 exports.FB_COL_USERS = "USERS";
 exports.FB_COL_MATCHES = "Matches";
+exports.FB_FIELD_MATCH_REGION = "platformId";
+exports.FB_FIELD_MATCH_CREATION = "gameCreation";
+exports.FB_FIELD_MATCH_DURATION = "gameDuration";
+exports.FB_FIELD_MATCH_QUEUE_ID = "queueId";
+exports.FB_FIELD_MATCH_MAP_ID = "mapId";
+exports.FB_FIELD_MATCH_GAME_MODE = "gameMode";
+exports.FB_FIELD_MATCH_GAME_TYPE = "gameType";
+
 exports.FB_COL_LIVE_MATCHES = "LiveMatches";
 
 exports.BLUE_TEAM = 100;
