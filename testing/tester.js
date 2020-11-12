@@ -49,6 +49,7 @@ var app = firebase.initializeApp(***REMOVED***
 // Initialize Cloud Functions through Firebase
 var functions = firebase.functions();
 
+firebase.functions().useEmulator("localhost", 5001);
 var testCall = firebase.functions().httpsCallable("getSummonerFull");
 
 let print = (args) => console.log(args);
@@ -63,15 +64,15 @@ let main = async () => ***REMOVED***
   // let smt = await testFunc(***REMOVED*** summonerName: "PerfectSniper", region: "EUN1" ***REMOVED***);
   // console.log(smt);
   // console.log("finish");
-  // testCall(***REMOVED*** summonerName: "PerfECTsniper", region: "eun1" ***REMOVED***)
-  //   .then(function (result) ***REMOVED***
-  //     // Read result of the Cloud Function.
-  //     console.warn(result.data);
-  //     // ...
-  //   ***REMOVED***)
-  //   .catch((err) => ***REMOVED***
-  //     console.log(err);
-  //   ***REMOVED***);
+  testCall(***REMOVED*** summonerName: "PerfECTsniper", region: "eun1", fetchMatch: true ***REMOVED***)
+    .then(function (result) ***REMOVED***
+      // Read result of the Cloud Function.
+      console.warn(result.data);
+      // ...
+    ***REMOVED***)
+    .catch((err) => ***REMOVED***
+      console.log(err);
+    ***REMOVED***);
   // console.log(extractKeys(["a", "b"], ***REMOVED*** a: 0, b: 1, c: 2 ***REMOVED***));
   // console.log("\n\n");
   // console.log(await getSummonerByName("NA1", "fwiedwice"));
@@ -90,7 +91,7 @@ let main = async () => ***REMOVED***
   //     0
   //   )
   // );
-  console.log(await getMatchByID("eun1", "2630126100"));
+  // console.log(await getMatchByID("eun1", "2630126100"));
 ***REMOVED***;
 
 main();
