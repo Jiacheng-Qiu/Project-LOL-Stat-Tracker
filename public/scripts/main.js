@@ -11,6 +11,15 @@ var rhit = rhit || ***REMOVED******REMOVED***;
 rhit.fbPlayersManager = null;
 rhit.fbAuthManager = null;
 
+// Functions as its name
+// from: https://stackoverflow.com/questions/3103962/converting-html-string-into-dom-elements
+function htmlToElement(html) ***REMOVED***
+    var template = document.createElement("template");
+    html = html.trim();
+    template.innerHTML = html;
+    return template.content.firstChild;
+***REMOVED***
+
 // Change password
 rhit.AccountController = class***REMOVED***
     constructor() ***REMOVED***
@@ -110,7 +119,7 @@ rhit.SearchPageController = class***REMOVED***
         let searchText = "";
         // Deal with dropdown selection (solution adapted)
         $('#regionSearch a').on('click', function()***REMOVED***
-            region = $(this).text();
+            region = $(this).text().trim().toLowerCase();;
             document.querySelector("#dropdownMenuButton").innerHTML = region;
         ***REMOVED***);
 
@@ -119,17 +128,13 @@ rhit.SearchPageController = class***REMOVED***
             console.log("Searching");
             searchText = document.querySelector("#searchText").value;
             if (region && searchText)***REMOVED***
-                rhit.searchPlayer(searchText, region);
+               new rhit.FetchPlayerInfo(searchText, region);
             ***REMOVED*** else ***REMOVED***
-                console.log("One of the two necessary information is missing!");
+               console.log("One of the two necessary information is missing!");
             ***REMOVED***
         ***REMOVED***;
 
     ***REMOVED***
-***REMOVED***
-
-rhit.searchPlayer = function(playerName, region) ***REMOVED***
-    // TODO: to be combined with didi functions for results
 ***REMOVED***
 
 
@@ -151,6 +156,36 @@ rhit.DetailPageController = class***REMOVED***
         document.querySelector('#refreshButton').onclick = (event) => ***REMOVED***
             
         ***REMOVED***;
+    ***REMOVED***
+***REMOVED***
+
+rhit.FetchPlayerInfo = class***REMOVED***
+    constructor(playerName, selectedRegion)***REMOVED***
+        var call = firebase.functions().httpsCallable("getSummonerFull");
+        call(***REMOVED*** summonerName: playerName, region: selectedRegion, fetchMatch: true ***REMOVED***)
+        .then(function (result) ***REMOVED***
+            // Read result of the Cloud Function.
+            console.log(result.data);
+            const newCard = htmlToElement(`
+            <div id="searchResult" class="card">
+                <div class="card-body">
+                    <h5 class="card-title">$***REMOVED***result.data.name***REMOVED***</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Summoner level: $***REMOVED***result.data.summonerLevel***REMOVED***
+                    </h6>
+                </div>
+            </div>`);
+
+
+            const oldCard = document.querySelector("#searchResult");
+            console.log(oldCard);
+            oldCard.removeAttribute("id");
+            oldCard.hidden = true;
+            oldCard.parentElement.appendChild(newCard);
+        ***REMOVED***)
+        .catch((err) => ***REMOVED***
+            console.log(err);
+        ***REMOVED***);
     ***REMOVED***
 ***REMOVED***
 
@@ -228,9 +263,6 @@ rhit.checkForRedirects = function() ***REMOVED***
 
 rhit.main = function () ***REMOVED***
     console.log("Ready");
-
-    firebase.functions().useEmulator("localhost", 5001);
-
     rhit.fbAuthManager = new rhit.FbAuthManager();
     rhit.fbAuthManager.beginListening(() => ***REMOVED***
         console.log("Auth listening");
