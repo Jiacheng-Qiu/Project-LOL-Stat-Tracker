@@ -24,6 +24,8 @@ let ***REMOVED***
   CONST_RANKED_FLEX,
 
   FB_COL_USERS,
+  FB_FIELD_FAVORITES,
+
   FB_COL_MATCHES,
   FB_COL_LIVE_MATCHES,
 ***REMOVED*** = require("./constants");
@@ -85,8 +87,98 @@ let checkMatch = async (matchID, region, batch) => ***REMOVED***
 ***REMOVED***;
 
 /**
- * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1", fetchMatch: false***REMOVED***
- * @param  ***REMOVED******REMOVED*** context   auth context
+ * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
+ * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ */
+exports.followPlayer = functions.https.onCall(async (data, context) => ***REMOVED***
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) ***REMOVED***
+    return ***REMOVED*** suc: false ***REMOVED***;
+  ***REMOVED***
+
+  let dbSummonerID = region + summonerName;
+
+  try ***REMOVED***
+    await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .update(***REMOVED***
+        [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayUnion(
+          dbSummonerID
+        ),
+      ***REMOVED***);
+
+    return ***REMOVED*** suc: true ***REMOVED***;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** suc: false ***REMOVED***;
+  ***REMOVED***
+***REMOVED***);
+
+/**
+ * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
+ * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ */
+exports.unfollowPlayer = functions.https.onCall(async (data, context) => ***REMOVED***
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) ***REMOVED***
+    return ***REMOVED*** suc: false ***REMOVED***;
+  ***REMOVED***
+
+  let dbSummonerID = region + summonerName;
+
+  try ***REMOVED***
+    await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .update(***REMOVED***
+        [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayRemove(
+          dbSummonerID
+        ),
+      ***REMOVED***);
+
+    return ***REMOVED*** suc: true ***REMOVED***;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** suc: false ***REMOVED***;
+  ***REMOVED***
+***REMOVED***);
+
+/**
+ * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
+ * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ */
+exports.doesFollow = functions.https.onCall(async (data, context) => ***REMOVED***
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) ***REMOVED***
+    return ***REMOVED*** follows: null ***REMOVED***;
+  ***REMOVED***
+
+  let dbSummonerID = region + summonerName;
+  try ***REMOVED***
+    let dbRef = await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .get();
+
+    let favorites = dbRef.data()[FB_FIELD_FAVORITES];
+
+    return ***REMOVED*** follows: favorites.includes(dbSummonerID) ***REMOVED***;
+  ***REMOVED*** catch (err) ***REMOVED***
+    return ***REMOVED*** follows: null, err ***REMOVED***;
+  ***REMOVED***
+***REMOVED***);
+
+/**
+ * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1", fetchMatch: true***REMOVED***
+ * @param  ***REMOVED******REMOVED*** context   auth context (automatic)
  *
  * initial fetching of summoner data first time they are in the DB
  */
@@ -190,6 +282,11 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
   ***REMOVED***
 ***REMOVED***);
 
+/**
+ * @param  ***REMOVED******REMOVED*** user
+ * 
+ * automatically gets called when user registers
+ */
 exports.setupUser = functions.auth.user().onCreate(async (user) => ***REMOVED***
   let uid = user.uid;
   print(uid);
@@ -200,7 +297,7 @@ exports.setupUser = functions.auth.user().onCreate(async (user) => ***REMOVED***
       favorites: [],
     ***REMOVED***;
     await dbRef.set(basicUser);
-    print("Finished setting up user")
+    print("Finished setting up user");
   ***REMOVED*** catch (err) ***REMOVED***
     print(err);
     return ***REMOVED*** err ***REMOVED***;
