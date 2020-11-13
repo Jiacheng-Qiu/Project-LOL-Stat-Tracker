@@ -50,7 +50,7 @@ var app = firebase.initializeApp({
 var functions = firebase.functions();
 
 firebase.functions().useEmulator("localhost", 5001);
-var testCall = firebase.functions().httpsCallable("getSummonerFull");
+var testCall = firebase.functions().httpsCallable("followPlayer");
 
 let print = (args) => console.log(args);
 
