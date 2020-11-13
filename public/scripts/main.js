@@ -145,8 +145,6 @@ rhit.DetailPageController = class***REMOVED***
             let region = urlParams.get("region");
             let summoner = urlParams.get("summoner");
 
-
-
             firebase.functions().httpsCallable("doesFollow")(***REMOVED***summonerName: summoner, region***REMOVED***);
         ***REMOVED***;
 
