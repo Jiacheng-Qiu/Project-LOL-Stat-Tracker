@@ -1,15 +1,15 @@
 const firebase = require("firebase");
 
-let ***REMOVED***
+let {
   getSummonerByName,
   getSummonerLeagueByID,
   getSummonerLiveGameByID,
   getMatchesByAccountID,
   extractKeys,
   getMatchByID,
-***REMOVED*** = require("../functions/utils");
+} = require("../functions/utils");
 
-let ***REMOVED***
+let {
   FB_COL_SUMMONERS,
   FB_FIELD_SUMMONER_ID,
   FB_FIELD_SUMMONER_TIER,
@@ -24,18 +24,18 @@ let ***REMOVED***
   FB_COL_USERS,
   FB_COL_MATCHES,
   FB_COL_LIVE_MATCHES,
-***REMOVED*** = require("../functions/constants");
+} = require("../functions/constants");
 
 // Required for side-effects
 require("firebase/functions");
 
 // var serviceAccount = require("../lol-stat-tracker-firebase-adminsdk.json");
-// var app = admin.initializeApp(***REMOVED***
+// var app = admin.initializeApp({
 //   credential: admin.credential.cert(serviceAccount),
 //   databaseURL: "https://lol-stat-tracker.firebaseio.com",
-// ***REMOVED***);
+// });
 
-var app = firebase.initializeApp(***REMOVED***
+var app = firebase.initializeApp({
   apiKey: "AIzaSyAHsmkC1CNF77JsbiD3os8bsiveNd5kFb8",
   authDomain: "lol-stat-tracker.firebaseapp.com",
   databaseURL: "https://lol-stat-tracker.firebaseio.com",
@@ -44,7 +44,7 @@ var app = firebase.initializeApp(***REMOVED***
   messagingSenderId: "1083535752801",
   appId: "1:1083535752801:web:d06df1435ad94b9b0ef420",
   measurementId: "G-5HCPXWN7QB",
-***REMOVED***);
+});
 
 // Initialize Cloud Functions through Firebase
 var functions = firebase.functions();
@@ -54,26 +54,26 @@ var testCall = firebase.functions().httpsCallable("followPlayer");
 
 let print = (args) => console.log(args);
 
-let testFunc = async (data) => ***REMOVED******REMOVED***;
+let testFunc = async (data) => {};
 
-let main = async () => ***REMOVED***
+let main = async () => {
   // let smt = await getSummonerLiveGameByID(
   //   "NA1",
   //   "mmHHYsMn6SviKeJ86CTboLxuNZc4xYpo2alZmxGrkqpmgh8"
   // );
-  // let smt = await testFunc(***REMOVED*** summonerName: "PerfectSniper", region: "EUN1" ***REMOVED***);
+  // let smt = await testFunc({ summonerName: "PerfectSniper", region: "EUN1" });
   // console.log(smt);
   // console.log("finish");
-  testCall(***REMOVED*** summonerName: "fwiedwice", region: "na1", fetchMatch: true ***REMOVED***)
-    .then(function (result) ***REMOVED***
+  testCall({ summonerName: "fwiedwice", region: "na1", fetchMatch: true })
+    .then(function (result) {
       // Read result of the Cloud Function.
       console.warn(result.data);
       // ...
-    ***REMOVED***)
-    .catch((err) => ***REMOVED***
+    })
+    .catch((err) => {
       console.log(err);
-    ***REMOVED***);
-  // console.log(extractKeys(["a", "b"], ***REMOVED*** a: 0, b: 1, c: 2 ***REMOVED***));
+    });
+  // console.log(extractKeys(["a", "b"], { a: 0, b: 1, c: 2 }));
   // console.log("\n\n");
   // console.log(await getSummonerByName("NA1", "fwiedwice"));
   // console.log("\n\n");
@@ -92,6 +92,6 @@ let main = async () => ***REMOVED***
   //   )
   // );
   // console.log(await getMatchByID("eun1", "2630126100"));
-***REMOVED***;
+};
 
 main();

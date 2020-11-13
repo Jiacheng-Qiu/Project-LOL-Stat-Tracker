@@ -1,5 +1,5 @@
-***REMOVED***
-  "projects": ***REMOVED***
+{
+  "projects": {
     "default": "lol-stat-tracker"
-  ***REMOVED***
-***REMOVED***
+  }
+}

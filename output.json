@@ -1,4 +1,4 @@
-***REMOVED***
+{
     "platformId": "EUN1",
     "gameCreation": 1604238905578,
     "gameDuration": 1178,
@@ -6,10 +6,10 @@
     "mapId": 11,
     "gameMode": "CLASSIC",
     "gameType": "MATCHED_GAME",
-    "participants": ***REMOVED***
-        "1": ***REMOVED***
+    "participants": {
+        "1": {
             "participantId": 1,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "sPUG0YI8RFsPYx54mqD4Ljegv2GgtacwVkhypIoHj5ZlkNk",
                 "summonerName": "SrkiThePro45",
@@ -18,14 +18,14 @@
                 "currentAccountId": "sPUG0YI8RFsPYx54mqD4Ljegv2GgtacwVkhypIoHj5ZlkNk",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/225606629",
                 "profileIcon": 4568
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 1,
                 "teamId": 100,
                 "championId": 7,
                 "spell1Id": 14,
                 "spell2Id": 4,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 1,
                     "win": true,
                     "item0": 3285,
@@ -128,12 +128,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5003
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "2": ***REMOVED***
+                }
+            }
+        },
+        "2": {
             "participantId": 2,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "gAJN9T-bnpdkWuWo2MbRVA3Kte90xT1c1KHejWs5hf7JdpI",
                 "summonerName": "Kapekm",
@@ -142,14 +142,14 @@
                 "currentAccountId": "gAJN9T-bnpdkWuWo2MbRVA3Kte90xT1c1KHejWs5hf7JdpI",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/216241617",
                 "profileIcon": 4568
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 2,
                 "teamId": 100,
                 "championId": 80,
                 "spell1Id": 14,
                 "spell2Id": 4,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 2,
                     "win": true,
                     "item0": 2055,
@@ -252,12 +252,12 @@
                     "statPerk0": 5008,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "3": ***REMOVED***
+                }
+            }
+        },
+        "3": {
             "participantId": 3,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "NHrCF_d_xvPub9amta6Rz1tISxsUmlyT15LfAjn-aE4Hvrg",
                 "summonerName": "Gugsta",
@@ -266,14 +266,14 @@
                 "currentAccountId": "NHrCF_d_xvPub9amta6Rz1tISxsUmlyT15LfAjn-aE4Hvrg",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/217765159",
                 "profileIcon": 3366
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 3,
                 "teamId": 100,
                 "championId": 120,
                 "spell1Id": 11,
                 "spell2Id": 4,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 3,
                     "win": true,
                     "item0": 3706,
@@ -376,12 +376,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "4": ***REMOVED***
+                }
+            }
+        },
+        "4": {
             "participantId": 4,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "Z_zUtoY1BrgKLHzj1EIMxcBJWGVS0fenZIg_bmvbqjFjDic",
                 "summonerName": "PerfectSniper",
@@ -390,14 +390,14 @@
                 "currentAccountId": "Z_zUtoY1BrgKLHzj1EIMxcBJWGVS0fenZIg_bmvbqjFjDic",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/204677722",
                 "profileIcon": 4779
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 4,
                 "teamId": 100,
                 "championId": 164,
                 "spell1Id": 4,
                 "spell2Id": 12,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 4,
                     "win": true,
                     "item0": 1055,
@@ -500,12 +500,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "5": ***REMOVED***
+                }
+            }
+        },
+        "5": {
             "participantId": 5,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "hqcnjDzBeL96eW64bHy538t9ieqaWv9jhbbkq-Jyw2XwvQI",
                 "summonerName": "Zollo",
@@ -514,14 +514,14 @@
                 "currentAccountId": "hqcnjDzBeL96eW64bHy538t9ieqaWv9jhbbkq-Jyw2XwvQI",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/211245025",
                 "profileIcon": 3379
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 5,
                 "teamId": 100,
                 "championId": 202,
                 "spell1Id": 4,
                 "spell2Id": 7,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 5,
                     "win": true,
                     "item0": 3031,
@@ -624,12 +624,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "6": ***REMOVED***
+                }
+            }
+        },
+        "6": {
             "participantId": 6,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUW1",
                 "accountId": "p9XUOv07BhW9JURz5xK-t4Hp71T1yKpKiYtqIYvZgO02LA",
                 "summonerName": "Injektopliaktor",
@@ -638,14 +638,14 @@
                 "currentAccountId": "j3caT6q-8gKBGPnd3HsvSl_0-mKgMydQtbBLub5T9GNwqv4",
                 "matchHistoryUri": "/v1/stats/player_history/EUW1/42467073",
                 "profileIcon": 4762
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 6,
                 "teamId": 200,
                 "championId": 876,
                 "spell1Id": 11,
                 "spell2Id": 4,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 6,
                     "win": false,
                     "item0": 1402,
@@ -748,12 +748,12 @@
                     "statPerk0": 5008,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "7": ***REMOVED***
+                }
+            }
+        },
+        "7": {
             "participantId": 7,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "1ZNW767dKNBtZA07GPww4Q3_Fwc4ycw5o23h6-PCJWG6lLI",
                 "summonerName": "t04Ko",
@@ -762,14 +762,14 @@
                 "currentAccountId": "1ZNW767dKNBtZA07GPww4Q3_Fwc4ycw5o23h6-PCJWG6lLI",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/219826820",
                 "profileIcon": 4053
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 7,
                 "teamId": 200,
                 "championId": 777,
                 "spell1Id": 4,
                 "spell2Id": 14,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 7,
                     "win": false,
                     "item0": 1055,
@@ -872,12 +872,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5003
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "8": ***REMOVED***
+                }
+            }
+        },
+        "8": {
             "participantId": 8,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "l_OJ3Ni_3n0gjGAngyqy8OqQy72OjSV5kewP4WYgn-OiKr8",
                 "summonerName": "Octorean",
@@ -886,14 +886,14 @@
                 "currentAccountId": "l_OJ3Ni_3n0gjGAngyqy8OqQy72OjSV5kewP4WYgn-OiKr8",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/206965087",
                 "profileIcon": 4763
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 8,
                 "teamId": 200,
                 "championId": 31,
                 "spell1Id": 4,
                 "spell2Id": 12,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 8,
                     "win": false,
                     "item0": 1054,
@@ -996,12 +996,12 @@
                     "statPerk0": 5008,
                     "statPerk1": 5002,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "9": ***REMOVED***
+                }
+            }
+        },
+        "9": {
             "participantId": 9,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "zVsSi8OC-Zvg1TJ4Bhke3cpwxlHFEJofLfoOHETDGVrKU8G1DR1uxjcr",
                 "summonerName": "tenki4abeibi77",
@@ -1010,14 +1010,14 @@
                 "currentAccountId": "zVsSi8OC-Zvg1TJ4Bhke3cpwxlHFEJofLfoOHETDGVrKU8G1DR1uxjcr",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/2575397567792768",
                 "profileIcon": 4312
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 9,
                 "teamId": 200,
                 "championId": 21,
                 "spell1Id": 4,
                 "spell2Id": 7,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 9,
                     "win": false,
                     "item0": 3508,
@@ -1120,12 +1120,12 @@
                     "statPerk0": 5005,
                     "statPerk1": 5008,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***,
-        "10": ***REMOVED***
+                }
+            }
+        },
+        "10": {
             "participantId": 10,
-            "player": ***REMOVED***
+            "player": {
                 "platformId": "EUN1",
                 "accountId": "DK0dIKTHDQOLq92R84xEs5J_Nga-csHvKKmOvQY0vy995-0",
                 "summonerName": "Trankospektor",
@@ -1134,14 +1134,14 @@
                 "currentAccountId": "DK0dIKTHDQOLq92R84xEs5J_Nga-csHvKKmOvQY0vy995-0",
                 "matchHistoryUri": "/v1/stats/player_history/EUN1/200335517",
                 "profileIcon": 4658
-            ***REMOVED***,
-            "gameData": ***REMOVED***
+            },
+            "gameData": {
                 "participantId": 10,
                 "teamId": 200,
                 "championId": 497,
                 "spell1Id": 4,
                 "spell2Id": 14,
-                "stats": ***REMOVED***
+                "stats": {
                     "participantId": 10,
                     "win": false,
                     "item0": 3859,
@@ -1244,12 +1244,12 @@
                     "statPerk0": 5008,
                     "statPerk1": 5002,
                     "statPerk2": 5002
-                ***REMOVED***
-            ***REMOVED***
-        ***REMOVED***
-    ***REMOVED***,
-    "teams": ***REMOVED***
+                }
+            }
+        }
+    },
+    "teams": {
         "100": true,
         "200": false
-    ***REMOVED***
-***REMOVED***
+    }
+}

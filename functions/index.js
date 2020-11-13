@@ -5,7 +5,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
-let ***REMOVED***
+let {
   FB_COL_SUMMONERS,
   FB_FIELD_SUMMONER_ID,
   FB_FIELD_ACCOUNT_ID,
@@ -28,36 +28,36 @@ let ***REMOVED***
 
   FB_COL_MATCHES,
   FB_COL_LIVE_MATCHES,
-***REMOVED*** = require("./constants");
+} = require("./constants");
 
-let ***REMOVED***
+let {
   extractKeys,
   getSummonerByName,
   getSummonerLeagueByID,
   getMatchByID,
   getMatchesByAccountID,
   parseMatch,
-***REMOVED*** = require("./utils");
+} = require("./utils");
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => ***REMOVED***
-//   functions.logger.info("Hello logs!", ***REMOVED***structuredData: true***REMOVED***);
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
-// ***REMOVED***);
-const LOGARGS = ***REMOVED*** structuredData: true ***REMOVED***;
+// });
+const LOGARGS = { structuredData: true };
 const COOLDOWN = 15;
 
-let print = (arg) => ***REMOVED***
+let print = (arg) => {
   functions.logger.info(arg);
-***REMOVED***;
+};
 
 // promise.all
 // store array of matches
-let checkMatch = async (matchID, region, batch) => ***REMOVED***
+let checkMatch = async (matchID, region, batch) => {
   let dbMatchID = region + matchID;
-  try ***REMOVED***
+  try {
     let dbRef = await admin
       .firestore()
       .collection(FB_COL_MATCHES)
@@ -65,7 +65,7 @@ let checkMatch = async (matchID, region, batch) => ***REMOVED***
       .get();
 
     print("checking if match dbRef exists");
-    if (!dbRef.exists) ***REMOVED***
+    if (!dbRef.exists) {
       print("match does not exist in DB");
 
       let data = await getMatchByID(region, matchID);
@@ -77,91 +77,91 @@ let checkMatch = async (matchID, region, batch) => ***REMOVED***
       batch.set(matchRef, data);
 
       return data;
-    ***REMOVED*** else ***REMOVED***
+    } else {
       print("match exists in DB");
       return dbRef.data();
-    ***REMOVED***
-  ***REMOVED*** catch (err) ***REMOVED***
-    return ***REMOVED*** err ***REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+    }
+  } catch (err) {
+    return { err };
+  }
+};
 
 /**
- * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
- * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
  */
-exports.followPlayer = functions.https.onCall(async (data, context) => ***REMOVED***
+exports.followPlayer = functions.https.onCall(async (data, context) => {
   let summonerName = data.summonerName.trim().toLowerCase();
   let region = data.region.trim().toLowerCase();
 
-  if (context.auth === null || context.auth.uid === null) ***REMOVED***
-    return ***REMOVED*** suc: false ***REMOVED***;
-  ***REMOVED***
+  if (context.auth === null || context.auth.uid === null) {
+    return { suc: false };
+  }
 
   let dbSummonerID = region + summonerName;
 
-  try ***REMOVED***
+  try {
     await admin
       .firestore()
       .collection(FB_COL_USERS)
       .doc(context.auth.uid)
-      .update(***REMOVED***
+      .update({
         [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayUnion(
           dbSummonerID
         ),
-      ***REMOVED***);
+      });
 
-    return ***REMOVED*** suc: true ***REMOVED***;
-  ***REMOVED*** catch (err) ***REMOVED***
-    return ***REMOVED*** suc: false ***REMOVED***;
-  ***REMOVED***
-***REMOVED***);
+    return { suc: true };
+  } catch (err) {
+    return { suc: false };
+  }
+});
 
 /**
- * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
- * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
  */
-exports.unfollowPlayer = functions.https.onCall(async (data, context) => ***REMOVED***
+exports.unfollowPlayer = functions.https.onCall(async (data, context) => {
   let summonerName = data.summonerName.trim().toLowerCase();
   let region = data.region.trim().toLowerCase();
 
-  if (context.auth === null || context.auth.uid === null) ***REMOVED***
-    return ***REMOVED*** suc: false ***REMOVED***;
-  ***REMOVED***
+  if (context.auth === null || context.auth.uid === null) {
+    return { suc: false };
+  }
 
   let dbSummonerID = region + summonerName;
 
-  try ***REMOVED***
+  try {
     await admin
       .firestore()
       .collection(FB_COL_USERS)
       .doc(context.auth.uid)
-      .update(***REMOVED***
+      .update({
         [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayRemove(
           dbSummonerID
         ),
-      ***REMOVED***);
+      });
 
-    return ***REMOVED*** suc: true ***REMOVED***;
-  ***REMOVED*** catch (err) ***REMOVED***
-    return ***REMOVED*** suc: false ***REMOVED***;
-  ***REMOVED***
-***REMOVED***);
+    return { suc: true };
+  } catch (err) {
+    return { suc: false };
+  }
+});
 
 /**
- * @param  ***REMOVED******REMOVED*** data    ***REMOVED***"summonerName": "FwiedWice", region:"na1"***REMOVED***
- * @param  ***REMOVED******REMOVED*** context auth context (automatic)
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
  */
-exports.doesFollow = functions.https.onCall(async (data, context) => ***REMOVED***
+exports.doesFollow = functions.https.onCall(async (data, context) => {
   let summonerName = data.summonerName.trim().toLowerCase();
   let region = data.region.trim().toLowerCase();
 
-  if (context.auth === null || context.auth.uid === null) ***REMOVED***
-    return ***REMOVED*** follows: null ***REMOVED***;
-  ***REMOVED***
+  if (context.auth === null || context.auth.uid === null) {
+    return { follows: null };
+  }
 
   let dbSummonerID = region + summonerName;
-  try ***REMOVED***
+  try {
     let dbRef = await admin
       .firestore()
       .collection(FB_COL_USERS)
@@ -170,26 +170,26 @@ exports.doesFollow = functions.https.onCall(async (data, context) => ***REMOVED*
 
     let favorites = dbRef.data()[FB_FIELD_FAVORITES];
 
-    return ***REMOVED*** follows: favorites.includes(dbSummonerID) ***REMOVED***;
-  ***REMOVED*** catch (err) ***REMOVED***
-    return ***REMOVED*** follows: null, err ***REMOVED***;
-  ***REMOVED***
-***REMOVED***);
+    return { follows: favorites.includes(dbSummonerID) };
+  } catch (err) {
+    return { follows: null, err };
+  }
+});
 
 /**
- * @param  ***REMOVED******REMOVED*** data      ***REMOVED***summonerName: "FwiedWice", region: "NA1", fetchMatch: true***REMOVED***
- * @param  ***REMOVED******REMOVED*** context   auth context (automatic)
+ * @param  {} data      {summonerName: "FwiedWice", region: "NA1", fetchMatch: true}
+ * @param  {} context   auth context (automatic)
  *
  * initial fetching of summoner data first time they are in the DB
  */
-exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REMOVED***
+exports.getSummonerFull = functions.https.onCall(async (data, context) => {
   let summonerName = data.summonerName.trim().toLowerCase();
   let region = data.region.trim().toLowerCase();
   let fetchMatch = data.fetchMatch;
 
   let dbSummonerID = region + summonerName;
   print("dbSummonerID:", dbSummonerID);
-  try ***REMOVED***
+  try {
     let dbRef = await admin
       .firestore()
       .collection(FB_COL_SUMMONERS)
@@ -198,21 +198,21 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
 
     let summonerID = "placeholder";
     let accountID = "placeholder";
-    let summonerInfo = ***REMOVED******REMOVED***;
+    let summonerInfo = {};
 
     // if ref doesnt exist, we pull the data
     // if ref exists, and it's been more than COOLDOWN since we last pulled, we pull the data
     // if ref exists, and it's been less than COOLDOWN, we return what we have stored in the DB
     print("checking if summoner dbRef exists");
-    if (!dbRef.exists) ***REMOVED***
+    if (!dbRef.exists) {
       print("New summoner entry");
       summonerInfo = await getSummonerByName(region, summonerName);
-      if (summonerInfo.err) ***REMOVED***
+      if (summonerInfo.err) {
         print("getSummonerByName Error:");
         print(summonerInfo.err);
-        return ***REMOVED*** err: summonerInfo.err ***REMOVED***;
-      ***REMOVED***
-    ***REMOVED*** else ***REMOVED***
+        return { err: summonerInfo.err };
+      }
+    } else {
       print("Exists in DB already");
       summonerInfo = dbRef.data();
 
@@ -220,13 +220,13 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
       let lastPulled = summonerInfo[FB_FIELD_TIMESTAMP]["seconds"];
       let current = Math.round(Date.now() / 1000);
       print("Last fetched: " + (current - lastPulled) + " seconds ago.");
-      if (current - lastPulled < COOLDOWN) ***REMOVED***
+      if (current - lastPulled < COOLDOWN) {
         print(
           "Can't fetch twice in a minute, returning locally stored values."
         );
         return summonerInfo;
-      ***REMOVED***
-    ***REMOVED***
+      }
+    }
 
     summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
     accountID = summonerInfo[FB_FIELD_ACCOUNT_ID];
@@ -234,28 +234,28 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
     // get summoner leagues (SOLO/DUO, FLEX)
     print("Getting summoner leagues");
     let summonerLeagues = await getSummonerLeagueByID(region, summonerID);
-    if (summonerLeagues.err) ***REMOVED***
+    if (summonerLeagues.err) {
       print("getSummonerLeagueByID Error:");
       print(summonerLeagues.err);
-      return ***REMOVED*** err: summonerLeagues.err ***REMOVED***;
-    ***REMOVED***
+      return { err: summonerLeagues.err };
+    }
 
-    let summoner = ***REMOVED***
+    let summoner = {
       ...summonerInfo,
       [FB_FIELD_SUMMONER_LEAGUES]: summonerLeagues,
       [FB_FIELD_TIMESTAMP]: admin.firestore.Timestamp.now(),
-    ***REMOVED***;
+    };
 
-    if (fetchMatch) ***REMOVED***
-      try ***REMOVED***
+    if (fetchMatch) {
+      try {
         let batch = admin.firestore().batch();
         let rawMatches = await getMatchesByAccountID(region, accountID, 0);
 
         let matchesData = await Promise.all(
-          rawMatches["matches"].map(async (rawMatch) => ***REMOVED***
+          rawMatches["matches"].map(async (rawMatch) => {
             let matchData = await checkMatch(rawMatch["gameId"], region, batch);
             return matchData;
-          ***REMOVED***)
+          })
         );
 
         print("Pushing batch with matches");
@@ -263,43 +263,43 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => ***REM
         summoner[FB_FIELD_SUMMONER_MATCHES] = rawMatches["matches"].map(
           (rawMatch) => region + rawMatch["gameId"]
         );
-      ***REMOVED*** catch (err) ***REMOVED***
+      } catch (err) {
         print("Error fetching matches");
-      ***REMOVED***
-    ***REMOVED***
+      }
+    }
 
     await admin
       .firestore()
       .collection(FB_COL_SUMMONERS)
       .doc(dbSummonerID)
-      .set(summoner, ***REMOVED*** merge: true ***REMOVED***);
+      .set(summoner, { merge: true });
 
     return summoner;
-  ***REMOVED*** catch (err) ***REMOVED***
+  } catch (err) {
     print("getSummonerFull Error:");
     print(err);
-    return ***REMOVED*** err ***REMOVED***;
-  ***REMOVED***
-***REMOVED***);
+    return { err };
+  }
+});
 
 /**
- * @param  ***REMOVED******REMOVED*** user
+ * @param  {} user
  * 
  * automatically gets called when user registers
  */
-exports.setupUser = functions.auth.user().onCreate(async (user) => ***REMOVED***
+exports.setupUser = functions.auth.user().onCreate(async (user) => {
   let uid = user.uid;
   print(uid);
-  try ***REMOVED***
+  try {
     let dbRef = admin.firestore().collection(FB_COL_USERS).doc(uid);
 
-    let basicUser = ***REMOVED***
+    let basicUser = {
       favorites: [],
-    ***REMOVED***;
+    };
     await dbRef.set(basicUser);
     print("Finished setting up user");
-  ***REMOVED*** catch (err) ***REMOVED***
+  } catch (err) {
     print(err);
-    return ***REMOVED*** err ***REMOVED***;
-  ***REMOVED***
-***REMOVED***);
+    return { err };
+  }
+});

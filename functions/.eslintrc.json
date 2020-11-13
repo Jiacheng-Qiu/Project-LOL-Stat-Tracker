@@ -1,13 +1,13 @@
-***REMOVED***
-  "parserOptions": ***REMOVED***
+{
+  "parserOptions": {
     // Required for certain syntax usages
     "ecmaVersion": 2018
-  ***REMOVED***,
+  },
   "plugins": [
     "promise"
   ],
   "extends": "eslint:recommended",
-  "rules": ***REMOVED***
+  "rules": {
     // Removed rule "disallow the use of console" from recommended eslint rules
     "no-console": "off",
 
@@ -119,5 +119,5 @@
 
     // Warn against nested then() or catch() statements
     "promise/no-nesting": 1
-  ***REMOVED***
-***REMOVED***
+  }
+}

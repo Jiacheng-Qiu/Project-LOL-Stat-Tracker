@@ -1,118 +1,118 @@
-body ***REMOVED***
+body {
     background: #888888;
-***REMOVED***
+}
 
-.navbar ***REMOVED***
+.navbar {
     background-color: #000000;
     color: white;
-***REMOVED***
+}
 
-.page-container ***REMOVED***
+.page-container {
     margin-top: 75px;
     width: 100%;
-***REMOVED***
+}
 
-#listPage .card-title, #listPage .card-subtitle ***REMOVED***
+#listPage .card-title, #listPage .card-subtitle {
     white-space: nowrap;
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
-***REMOVED***
+}
 
-.card***REMOVED***
+.card{
     margin: 50px;
     background-color: #CCCCCC;
     border-radius: 25px;
-***REMOVED***
+}
 
-.card-subtitle ***REMOVED***
+.card-subtitle {
     margin: 5px 0;
     border-radius: 5px;
-***REMOVED***
+}
 
-#loginInfo ***REMOVED***
+#loginInfo {
     display: block;
     width:100%;
     text-align: center;
-***REMOVED***
+}
 
-#login, #register ***REMOVED***
+#login, #register {
     color: white;
     background: orange;
     font-size: 1.1em;
     padding: 10px 30px;
     border-radius: 5px;
-***REMOVED***
+}
 
-#loginRedirect, #registerRedirect ***REMOVED***
+#loginRedirect, #registerRedirect {
     color: blue;
     padding: 10px 15px;
-***REMOVED***
+}
 
-.bmd-layout-content***REMOVED***
+.bmd-layout-content{
     height: 100vh;
-***REMOVED***
+}
 
-.bmd-layout-drawer > ul ***REMOVED***
+.bmd-layout-drawer > ul {
     background-color: #cccccc;
-***REMOVED***
+}
 
-.bmd-layout-drawer>.list-group .list-group-item ***REMOVED***
+.bmd-layout-drawer>.list-group .list-group-item {
     padding-right: 1rem;
     padding-left: 1rem;
     font-size: 0.8rem;
     font-weight: 500;
-***REMOVED***
+}
 
-.list-group-item :first-child ***REMOVED***
+.list-group-item :first-child {
     margin-right: 0.2rem;
-***REMOVED***
+}
 
-#searchRedirect ***REMOVED***
+#searchRedirect {
     position: fixed;
     right: 20px;
-***REMOVED***
+}
 
-#searchPage > container ***REMOVED***
+#searchPage > container {
     width: 100%;
-***REMOVED***
+}
 
-#searchText ***REMOVED***
+#searchText {
     margin-left: 25%;
     width: 40%;
     border-radius: 10px;
-***REMOVED***
+}
 
-#searchSubmit ***REMOVED***
+#searchSubmit {
     padding: 0 20px;
     background: orange;
     border-radius: 10px;
-***REMOVED***
+}
 
-.dropdown ***REMOVED***
+.dropdown {
     width: 100%;
     margin-left: 25%;
-***REMOVED***
+}
 
-.dropdown > button ***REMOVED***
+.dropdown > button {
     margin-top: 20px;
     background: orange;
     padding: 5px 10px;
-***REMOVED***
+}
 
-#playerInfo***REMOVED***
+#playerInfo{
     display: grid;
     justify-content: start;
     grid-gap: 30px;
     grid-template-columns: auto auto auto;
-***REMOVED***
+}
 
-#playerIcon ***REMOVED***
+#playerIcon {
     width: 100px;
     height: 100px;
     grid-column: 1/2;
-***REMOVED***
+}
 
-#playerName***REMOVED***
+#playerName{
     font-size: 1.5em;
-***REMOVED***
+}

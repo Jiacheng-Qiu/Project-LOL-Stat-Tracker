@@ -1,4 +1,4 @@
-***REMOVED***
+{
   "gameId": 2630126100,
   "platformId": "EUN1",
   "gameCreation": 1604238905578,
@@ -10,7 +10,7 @@
   "gameMode": "CLASSIC",
   "gameType": "MATCHED_GAME",
   "teams": [
-    ***REMOVED***
+    {
       "teamId": 100,
       "win": "Win",
       "firstBlood": true,
@@ -27,29 +27,29 @@
       "riftHeraldKills": 0,
       "dominionVictoryScore": 0,
       "bans": [
-        ***REMOVED***
+        {
           "championId": 35,
           "pickTurn": 1
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 2,
           "pickTurn": 2
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 111,
           "pickTurn": 3
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 238,
           "pickTurn": 4
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 1,
           "pickTurn": 5
-        ***REMOVED***
+        }
       ]
-    ***REMOVED***,
-    ***REMOVED***
+    },
+    {
       "teamId": 200,
       "win": "Fail",
       "firstBlood": false,
@@ -66,37 +66,37 @@
       "riftHeraldKills": 1,
       "dominionVictoryScore": 0,
       "bans": [
-        ***REMOVED***
+        {
           "championId": 56,
           "pickTurn": 6
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 103,
           "pickTurn": 7
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 122,
           "pickTurn": 8
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 360,
           "pickTurn": 9
-        ***REMOVED***,
-        ***REMOVED***
+        },
+        {
           "championId": 147,
           "pickTurn": 10
-        ***REMOVED***
+        }
       ]
-    ***REMOVED***
+    }
   ],
   "participants": [
-    ***REMOVED***
+    {
       "participantId": 1,
       "teamId": 100,
       "championId": 7,
       "spell1Id": 14,
       "spell2Id": 4,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 1,
         "win": true,
         "item0": 3285,
@@ -199,41 +199,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5003
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 1,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 5.1
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 466.5
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 297.1
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": -0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": 2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 419
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": 97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 2,
       "teamId": 100,
       "championId": 80,
       "spell1Id": 14,
       "spell2Id": 4,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 2,
         "win": true,
         "item0": 2055,
@@ -336,41 +336,41 @@
         "statPerk0": 5008,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 2,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 1.8
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 286.9
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 197.7
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": -0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": 2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 344.3
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": 97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 3,
       "teamId": 100,
       "championId": 120,
       "spell1Id": 11,
       "spell2Id": 4,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 3,
         "win": true,
         "item0": 3706,
@@ -473,41 +473,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 3,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 0.2
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 274.2
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 234.5
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": -0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": 2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 946.5
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": 97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 4,
       "teamId": 100,
       "championId": 164,
       "spell1Id": 4,
       "spell2Id": 12,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 4,
         "win": true,
         "item0": 1055,
@@ -610,41 +610,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 4,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 6.2
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 446.5
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 300.7
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": -0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": 2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 632.5
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": 97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 5,
       "teamId": 100,
       "championId": 202,
       "spell1Id": 4,
       "spell2Id": 7,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 5,
         "win": true,
         "item0": 3031,
@@ -747,41 +747,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 5,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 5.6
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 268.2
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 299.8
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": -0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": 2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 304.6
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": 97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 6,
       "teamId": 200,
       "championId": 876,
       "spell1Id": 11,
       "spell2Id": 4,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 6,
         "win": false,
         "item0": 1402,
@@ -884,41 +884,41 @@
         "statPerk0": 5008,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 6,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 0.5
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 349
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 323.7
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": 0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": -2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 757.5
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": -97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 7,
       "teamId": 200,
       "championId": 777,
       "spell1Id": 4,
       "spell2Id": 14,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 7,
         "win": false,
         "item0": 1055,
@@ -1021,41 +1021,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5003
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 7,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 4.5
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 352.79999999999995
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 207.9
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": 0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": -2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 506.9
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": -97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 8,
       "teamId": 200,
       "championId": 31,
       "spell1Id": 4,
       "spell2Id": 12,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 8,
         "win": false,
         "item0": 1054,
@@ -1158,41 +1158,41 @@
         "statPerk0": 5008,
         "statPerk1": 5002,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 8,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 6.7
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 474.4
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 260
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": 0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": -2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 557.2
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": -97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 9,
       "teamId": 200,
       "championId": 21,
       "spell1Id": 4,
       "spell2Id": 7,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 9,
         "win": false,
         "item0": 3508,
@@ -1295,41 +1295,41 @@
         "statPerk0": 5005,
         "statPerk1": 5008,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 9,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 6.7
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 302.9
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 257.5
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": 0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": -2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 194.8
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": -97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 10,
       "teamId": 200,
       "championId": 497,
       "spell1Id": 4,
       "spell2Id": 14,
-      "stats": ***REMOVED***
+      "stats": {
         "participantId": 10,
         "win": false,
         "item0": 3859,
@@ -1432,39 +1432,39 @@
         "statPerk0": 5008,
         "statPerk1": 5002,
         "statPerk2": 5002
-      ***REMOVED***,
-      "timeline": ***REMOVED***
+      },
+      "timeline": {
         "participantId": 10,
-        "creepsPerMinDeltas": ***REMOVED***
+        "creepsPerMinDeltas": {
           "0-10": 1.3
-        ***REMOVED***,
-        "xpPerMinDeltas": ***REMOVED***
+        },
+        "xpPerMinDeltas": {
           "0-10": 252.2
-        ***REMOVED***,
-        "goldPerMinDeltas": ***REMOVED***
+        },
+        "goldPerMinDeltas": {
           "0-10": 144.1
-        ***REMOVED***,
-        "csDiffPerMinDeltas": ***REMOVED***
+        },
+        "csDiffPerMinDeltas": {
           "0-10": 0.15999999999999925
-        ***REMOVED***,
-        "xpDiffPerMinDeltas": ***REMOVED***
+        },
+        "xpDiffPerMinDeltas": {
           "0-10": -2.19999999999996
-        ***REMOVED***,
-        "damageTakenPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenPerMinDeltas": {
           "0-10": 144.5
-        ***REMOVED***,
-        "damageTakenDiffPerMinDeltas": ***REMOVED***
+        },
+        "damageTakenDiffPerMinDeltas": {
           "0-10": -97.19999999999993
-        ***REMOVED***,
+        },
         "role": "DUO_SUPPORT",
         "lane": "NONE"
-      ***REMOVED***
-    ***REMOVED***
+      }
+    }
   ],
   "participantIdentities": [
-    ***REMOVED***
+    {
       "participantId": 1,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "sPUG0YI8RFsPYx54mqD4Ljegv2GgtacwVkhypIoHj5ZlkNk",
         "summonerName": "SrkiThePro45",
@@ -1473,11 +1473,11 @@
         "currentAccountId": "sPUG0YI8RFsPYx54mqD4Ljegv2GgtacwVkhypIoHj5ZlkNk",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/225606629",
         "profileIcon": 4568
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 2,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "gAJN9T-bnpdkWuWo2MbRVA3Kte90xT1c1KHejWs5hf7JdpI",
         "summonerName": "Kapekm",
@@ -1486,11 +1486,11 @@
         "currentAccountId": "gAJN9T-bnpdkWuWo2MbRVA3Kte90xT1c1KHejWs5hf7JdpI",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/216241617",
         "profileIcon": 4568
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 3,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "NHrCF_d_xvPub9amta6Rz1tISxsUmlyT15LfAjn-aE4Hvrg",
         "summonerName": "Gugsta",
@@ -1499,11 +1499,11 @@
         "currentAccountId": "NHrCF_d_xvPub9amta6Rz1tISxsUmlyT15LfAjn-aE4Hvrg",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/217765159",
         "profileIcon": 3366
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 4,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "Z_zUtoY1BrgKLHzj1EIMxcBJWGVS0fenZIg_bmvbqjFjDic",
         "summonerName": "PerfectSniper",
@@ -1512,11 +1512,11 @@
         "currentAccountId": "Z_zUtoY1BrgKLHzj1EIMxcBJWGVS0fenZIg_bmvbqjFjDic",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/204677722",
         "profileIcon": 4779
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 5,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "hqcnjDzBeL96eW64bHy538t9ieqaWv9jhbbkq-Jyw2XwvQI",
         "summonerName": "Zollo",
@@ -1525,11 +1525,11 @@
         "currentAccountId": "hqcnjDzBeL96eW64bHy538t9ieqaWv9jhbbkq-Jyw2XwvQI",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/211245025",
         "profileIcon": 3379
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 6,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUW1",
         "accountId": "p9XUOv07BhW9JURz5xK-t4Hp71T1yKpKiYtqIYvZgO02LA",
         "summonerName": "Injektopliaktor",
@@ -1538,11 +1538,11 @@
         "currentAccountId": "j3caT6q-8gKBGPnd3HsvSl_0-mKgMydQtbBLub5T9GNwqv4",
         "matchHistoryUri": "/v1/stats/player_history/EUW1/42467073",
         "profileIcon": 4762
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 7,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "1ZNW767dKNBtZA07GPww4Q3_Fwc4ycw5o23h6-PCJWG6lLI",
         "summonerName": "t04Ko",
@@ -1551,11 +1551,11 @@
         "currentAccountId": "1ZNW767dKNBtZA07GPww4Q3_Fwc4ycw5o23h6-PCJWG6lLI",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/219826820",
         "profileIcon": 4053
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 8,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "l_OJ3Ni_3n0gjGAngyqy8OqQy72OjSV5kewP4WYgn-OiKr8",
         "summonerName": "Octorean",
@@ -1564,11 +1564,11 @@
         "currentAccountId": "l_OJ3Ni_3n0gjGAngyqy8OqQy72OjSV5kewP4WYgn-OiKr8",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/206965087",
         "profileIcon": 4763
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 9,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "zVsSi8OC-Zvg1TJ4Bhke3cpwxlHFEJofLfoOHETDGVrKU8G1DR1uxjcr",
         "summonerName": "tenki4abeibi77",
@@ -1577,11 +1577,11 @@
         "currentAccountId": "zVsSi8OC-Zvg1TJ4Bhke3cpwxlHFEJofLfoOHETDGVrKU8G1DR1uxjcr",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/2575397567792768",
         "profileIcon": 4312
-      ***REMOVED***
-    ***REMOVED***,
-    ***REMOVED***
+      }
+    },
+    {
       "participantId": 10,
-      "player": ***REMOVED***
+      "player": {
         "platformId": "EUN1",
         "accountId": "DK0dIKTHDQOLq92R84xEs5J_Nga-csHvKKmOvQY0vy995-0",
         "summonerName": "Trankospektor",
@@ -1590,7 +1590,7 @@
         "currentAccountId": "DK0dIKTHDQOLq92R84xEs5J_Nga-csHvKKmOvQY0vy995-0",
         "matchHistoryUri": "/v1/stats/player_history/EUN1/200335517",
         "profileIcon": 4658
-      ***REMOVED***
-    ***REMOVED***
+      }
+    }
   ]
-***REMOVED***
+}
