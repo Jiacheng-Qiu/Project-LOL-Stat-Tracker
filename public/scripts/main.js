@@ -137,7 +137,7 @@ rhit.DetailPageController = class{
     constructor() {
         new rhit.AccountController();
 
-        window.location.href = `/detail.html?uid=${1}`;
+        // window.location.href = `/detail.html?uid=${1}`;
 
         // TODO: Favorite and unfavorite
         document.querySelector('#favoriteButton').onclick = (event) => {
@@ -223,7 +223,18 @@ rhit.checkForRedirects = function() {
 };
 
 rhit.main = function () {
-	console.log("Ready");
+    console.log("Ready");
+    var testCall = firebase.functions().httpsCallable("getSummonerFull");
+
+    testCall({ summonerName: "fwiedwice", region: "na1", fetchMatch: true })
+    .then(function (result) {
+        // Read result of the Cloud Function.
+        console.log(result.data);
+        // ...
+    })
+    .catch((err) => {
+        console.log(err);
+    });
     rhit.fbAuthManager = new rhit.FbAuthManager();
     rhit.fbAuthManager.beginListening(() => {
         console.log("Auth listening");
