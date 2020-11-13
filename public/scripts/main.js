@@ -6,28 +6,28 @@
  * qiuj1 chaiq
  */
 
-var rhit = rhit || ***REMOVED******REMOVED***;
+var rhit = rhit || {};
 
 rhit.fbPlayersManager = null;
 rhit.fbAuthManager = null;
 
 // Functions as its name
 // from: https://stackoverflow.com/questions/3103962/converting-html-string-into-dom-elements
-function htmlToElement(html) ***REMOVED***
+function htmlToElement(html) {
   var template = document.createElement("template");
   html = html.trim();
   template.innerHTML = html;
   return template.content.firstChild;
-***REMOVED***
+}
 
 // Change password
-rhit.AccountController = class ***REMOVED***
-  constructor() ***REMOVED***
+rhit.AccountController = class {
+  constructor() {
     // Adjust user text according to stat
-    if (rhit.fbAuthManager.isSignedIn) ***REMOVED***
+    if (rhit.fbAuthManager.isSignedIn) {
       document.querySelector("#loginInfo").textContent =
         "Currently logged in as: " + rhit.fbAuthManager.uid;
-    ***REMOVED*** else ***REMOVED***
+    } else {
       document.querySelector("#loginInfo").textContent =
         "You are not logged in.";
       var button = document.createElement("button");
@@ -37,134 +37,134 @@ rhit.AccountController = class ***REMOVED***
       button.textContent = "Login here";
       document.querySelector("#loginInfo").appendChild(button);
 
-      document.querySelector("#loginRedirect").onclick = (event) => ***REMOVED***
+      document.querySelector("#loginRedirect").onclick = (event) => {
         console.log("login redirect");
         window.location.href = "/login.html";
-      ***REMOVED***;
-    ***REMOVED***
+      };
+    }
 
-    document.querySelector("#submitEditPass").onclick = (event) => ***REMOVED***
+    document.querySelector("#submitEditPass").onclick = (event) => {
       const pass = document.querySelector("#newPass");
       const reenter = document.querySelector("#reenterPass");
-      if (pass.value == reenter.value) ***REMOVED***
+      if (pass.value == reenter.value) {
         rhit.fbAuthManager.changePassword(pass.value);
-      ***REMOVED*** else ***REMOVED***
+      } else {
         // Send warning
         console.log("New passwords don't match");
-      ***REMOVED***
-    ***REMOVED***;
+      }
+    };
 
     // Logout
-    document.querySelector("#signOut").onclick = (event) => ***REMOVED***
+    document.querySelector("#signOut").onclick = (event) => {
       console.log("Sign out");
       rhit.fbAuthManager.signOut();
-    ***REMOVED***;
+    };
     // Delete account
-    document.querySelector("#submitDelete").onclick = (event) => ***REMOVED***
+    document.querySelector("#submitDelete").onclick = (event) => {
       console.log("Delete Account");
       rhit.fbAuthManager.deleteAccount();
-    ***REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+    };
+  }
+};
 
-rhit.ListPageController = class ***REMOVED***
-  constructor() ***REMOVED***
+rhit.ListPageController = class {
+  constructor() {
     // Search redirect
-    document.querySelector("#searchRedirect").onclick = (event) => ***REMOVED***
+    document.querySelector("#searchRedirect").onclick = (event) => {
       console.log("Redirecting to search page");
       window.location.href = "/search.html";
-    ***REMOVED***;
+    };
 
     new rhit.AccountController();
-  ***REMOVED***
-***REMOVED***;
+  }
+};
 
-rhit.LoginPageController = class ***REMOVED***
-  constructor() ***REMOVED***
-    document.querySelector("#registerRedirect").onclick = (event) => ***REMOVED***
+rhit.LoginPageController = class {
+  constructor() {
+    document.querySelector("#registerRedirect").onclick = (event) => {
       console.log("reg redirect");
       window.location.href = "/register.html";
-    ***REMOVED***;
+    };
 
     const account = document.querySelector("#loginAccount");
     const password = document.querySelector("#loginPassword");
-    document.querySelector("#login").onclick = (event) => ***REMOVED***
+    document.querySelector("#login").onclick = (event) => {
       firebase
         .auth()
         .signInWithEmailAndPassword(account.value, password.value)
-        .catch(function (error) ***REMOVED***
+        .catch(function (error) {
           console.log("error: ", error.code, error.message);
-        ***REMOVED***);
-    ***REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+        });
+    };
+  }
+};
 
-rhit.RegisterPageController = class ***REMOVED***
-  constructor() ***REMOVED***
-    document.querySelector("#loginRedirect").onclick = (event) => ***REMOVED***
+rhit.RegisterPageController = class {
+  constructor() {
+    document.querySelector("#loginRedirect").onclick = (event) => {
       console.log("login redirect");
       window.location.href = "/login.html";
-    ***REMOVED***;
+    };
 
     let account = document.querySelector("#registerAccount");
     let password = document.querySelector("#registerPassword");
-    document.querySelector("#register").onclick = (event) => ***REMOVED***
+    document.querySelector("#register").onclick = (event) => {
       firebase
         .auth()
         .createUserWithEmailAndPassword(account.value, password.value)
-        .catch(function (error) ***REMOVED***
+        .catch(function (error) {
           console.log("error: ", error.code, error.message);
-        ***REMOVED***);
-    ***REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+        });
+    };
+  }
+};
 
-rhit.SearchPageController = class ***REMOVED***
-  constructor() ***REMOVED***
+rhit.SearchPageController = class {
+  constructor() {
     new rhit.AccountController();
 
     let region = "";
     let searchText = "";
     // Deal with dropdown selection (solution adapted)
-    $("#regionSearch a").on("click", function () ***REMOVED***
+    $("#regionSearch a").on("click", function () {
       region = $(this).text().trim().toLowerCase();
       document.querySelector("#dropdownMenuButton").innerHTML = region;
-    ***REMOVED***);
+    });
 
     // Takes info when search
-    document.querySelector("#searchSubmit").onclick = async (event) => ***REMOVED***
+    document.querySelector("#searchSubmit").onclick = async (event) => {
       console.log("Searching");
       searchText = document.querySelector("#searchText").value;
-      if (region && searchText) ***REMOVED***
+      if (region && searchText) {
         console.log("stuff:", region, searchText)
         let result = await rhit.fetchPlayer(searchText, region);
         console.log(result)
         const newCard = htmlToElement(`
                 <div id="searchResult" class="card">
                     <div class="card-body">
-                        <h5 class="card-title">$***REMOVED***result.data.name***REMOVED***</h5>
+                        <h5 class="card-title">${result.data.name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            Summoner level: $***REMOVED***result.data.summonerLevel***REMOVED***
+                            Summoner level: ${result.data.summonerLevel}
                         </h6>
                     </div>
                 </div>`);
-        newCard.onclick = (event) => ***REMOVED***
-          window.location.href = `/detail.html?region=$***REMOVED***region***REMOVED***&summoner=$***REMOVED***result.data.name***REMOVED***`;
-        ***REMOVED***;
+        newCard.onclick = (event) => {
+          window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
+        };
         const oldCard = document.querySelector("#searchResult");
         console.log(oldCard);
         oldCard.removeAttribute("id");
         oldCard.hidden = true;
         oldCard.parentElement.appendChild(newCard);
-      ***REMOVED*** else ***REMOVED***
+      } else {
         console.log("One of the two necessary information is missing!");
-      ***REMOVED***
-    ***REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+      }
+    };
+  }
+};
 
-rhit.DetailPageController = class ***REMOVED***
-  constructor() ***REMOVED***
+rhit.DetailPageController = class {
+  constructor() {
     new rhit.AccountController();
 
     console.log();
@@ -175,119 +175,119 @@ rhit.DetailPageController = class ***REMOVED***
     // Refresh match history based on player action
 
     // TODO: Favorite and unfavorite
-    document.querySelector("#favoriteButton").onclick = (event) => ***REMOVED***
+    document.querySelector("#favoriteButton").onclick = (event) => {
       let urlParams = new URLSearchParams(window.location.search);
       let region = urlParams.get("region");
       let summoner = urlParams.get("summoner");
 
-      firebase.functions().httpsCallable("doesFollow")(***REMOVED***
+      firebase.functions().httpsCallable("doesFollow")({
         summonerName: summoner,
         region,
-      ***REMOVED***);
-    ***REMOVED***;
+      });
+    };
 
-    document.querySelector("#refreshButton").onclick = (event) => ***REMOVED******REMOVED***;
-  ***REMOVED***
-***REMOVED***;
+    document.querySelector("#refreshButton").onclick = (event) => {};
+  }
+};
 
-rhit.fetchPlayer = async (playerName, selectedRegion) => ***REMOVED***
-  let result = await firebase.functions().httpsCallable("getSummonerFull")(***REMOVED***
+rhit.fetchPlayer = async (playerName, selectedRegion) => {
+  let result = await firebase.functions().httpsCallable("getSummonerFull")({
     summonerName: playerName,
     region: selectedRegion,
     fetchMatch: true,
-  ***REMOVED***);
+  });
   return result;
-***REMOVED***;
+};
 
-rhit.initializePage = function () ***REMOVED***
-  if (document.querySelector("#loginPage")) ***REMOVED***
+rhit.initializePage = function () {
+  if (document.querySelector("#loginPage")) {
     console.log("On the login page");
     new rhit.LoginPageController();
-  ***REMOVED***
-  if (document.querySelector("#registerPage")) ***REMOVED***
+  }
+  if (document.querySelector("#registerPage")) {
     console.log("On the register page");
     new rhit.RegisterPageController();
-  ***REMOVED***
-  if (document.querySelector("#listPage")) ***REMOVED***
+  }
+  if (document.querySelector("#listPage")) {
     console.log("On the list page");
     new rhit.ListPageController();
-  ***REMOVED***
-  if (document.querySelector("#searchPage")) ***REMOVED***
+  }
+  if (document.querySelector("#searchPage")) {
     console.log("On the search page");
     new rhit.SearchPageController();
-  ***REMOVED***
-  if (document.querySelector("#detailPage")) ***REMOVED***
+  }
+  if (document.querySelector("#detailPage")) {
     console.log("On the detail page");
     new rhit.DetailPageController();
-  ***REMOVED***
-***REMOVED***;
+  }
+};
 
-rhit.FbAuthManager = class ***REMOVED***
-  constructor() ***REMOVED***
+rhit.FbAuthManager = class {
+  constructor() {
     this._user = null;
-  ***REMOVED***
+  }
 
-  beginListening(changeListener) ***REMOVED***
-    firebase.auth().onAuthStateChanged((user) => ***REMOVED***
+  beginListening(changeListener) {
+    firebase.auth().onAuthStateChanged((user) => {
       this._user = user;
       changeListener();
-    ***REMOVED***);
-  ***REMOVED***
+    });
+  }
 
-  signOut() ***REMOVED***
+  signOut() {
     firebase.auth().signOut();
-  ***REMOVED***
+  }
 
-  changePassword(newPassword) ***REMOVED***
+  changePassword(newPassword) {
     user
       .updatePassword(newPassword)
-      .then(function () ***REMOVED******REMOVED***)
-      .catch(function (error) ***REMOVED***
+      .then(function () {})
+      .catch(function (error) {
         console.log(error);
-      ***REMOVED***);
-  ***REMOVED***
+      });
+  }
 
-  deleteAccount() ***REMOVED***
+  deleteAccount() {
     this._user
       .delete()
-      .then(function () ***REMOVED***
+      .then(function () {
         // Refresh page
         window.location.href = "/";
-      ***REMOVED***)
-      .catch(function (error) ***REMOVED***
+      })
+      .catch(function (error) {
         console.log(error);
-      ***REMOVED***);
-  ***REMOVED***
+      });
+  }
 
-  get uid() ***REMOVED***
+  get uid() {
     return this._user.uid;
-  ***REMOVED***
+  }
 
-  get isSignedIn() ***REMOVED***
+  get isSignedIn() {
     return !!this._user;
-  ***REMOVED***
-***REMOVED***;
+  }
+};
 
 // If the user is logged in, he shouldn't be on login/reg page
-rhit.checkForRedirects = function () ***REMOVED***
+rhit.checkForRedirects = function () {
   if (
     (document.querySelector("#loginPage") ||
       document.querySelector("#registerPage")) &&
     rhit.fbAuthManager.isSignedIn
-  ) ***REMOVED***
+  ) {
     window.location.href = "/";
-  ***REMOVED***
-***REMOVED***;
+  }
+};
 
-rhit.main = function () ***REMOVED***
+rhit.main = function () {
   console.log("Ready");
   rhit.fbAuthManager = new rhit.FbAuthManager();
-  rhit.fbAuthManager.beginListening(() => ***REMOVED***
+  rhit.fbAuthManager.beginListening(() => {
     console.log("Auth listening");
     // Page init
     rhit.checkForRedirects();
     rhit.initializePage();
-  ***REMOVED***);
-***REMOVED***;
+  });
+};
 
 rhit.main();
