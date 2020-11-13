@@ -25,6 +25,11 @@ body ***REMOVED***
     border-radius: 25px;
 ***REMOVED***
 
+.card-subtitle ***REMOVED***
+    margin: 5px 0;
+    border-radius: 5px;
+***REMOVED***
+
 #loginInfo ***REMOVED***
     display: block;
     width:100%;
@@ -93,4 +98,21 @@ body ***REMOVED***
     margin-top: 20px;
     background: orange;
     padding: 5px 10px;
+***REMOVED***
+
+#playerInfo***REMOVED***
+    display: grid;
+    justify-content: start;
+    grid-gap: 30px;
+    grid-template-columns: auto auto auto;
+***REMOVED***
+
+#playerIcon ***REMOVED***
+    width: 100px;
+    height: 100px;
+    grid-column: 1/2;
+***REMOVED***
+
+#playerName***REMOVED***
+    font-size: 1.5em;
 ***REMOVED***
