@@ -3,7 +3,7 @@
  * Provides the JavaScript interactions for all pages.
  *
  * @author 
- * qiuj1
+ * qiuj1 chaiq
  */
 
 var rhit = rhit || {};
@@ -132,6 +132,24 @@ rhit.searchPlayer = function(playerName, region) {
     // TODO: to be combined with didi functions for results
 }
 
+
+rhit.DetailPageController = class{
+    constructor() {
+        new rhit.AccountController();
+
+        window.location.href = `/detail.html?uid=${1}`;
+
+        // TODO: Favorite and unfavorite
+        document.querySelector('#favoriteButton').onclick = (event) => {
+            
+        };
+
+        document.querySelector('#refreshButton').onclick = (event) => {
+            
+        };
+    }
+}
+
 rhit.initializePage = function() {
     if (document.querySelector("#loginPage")) {
 		console.log("On the login page");
@@ -148,7 +166,11 @@ rhit.initializePage = function() {
     if (document.querySelector("#searchPage")) {
 		console.log("On the search page");
 		new rhit.SearchPageController();
-	}
+    }
+    if (document.querySelector("#detailPage")) {
+		console.log("On the detail page");
+		new rhit.DetailPageController();
+    }
 }
 
 rhit.FbAuthManager = class {

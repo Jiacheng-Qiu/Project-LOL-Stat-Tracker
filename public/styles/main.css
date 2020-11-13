@@ -25,6 +25,11 @@ body {
     border-radius: 25px;
 }
 
+.card-subtitle {
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
 #loginInfo {
     display: block;
     width:100%;
@@ -93,4 +98,21 @@ body {
     margin-top: 20px;
     background: orange;
     padding: 5px 10px;
+}
+
+#playerInfo{
+    display: grid;
+    justify-content: start;
+    grid-gap: 30px;
+    grid-template-columns: auto auto auto;
+}
+
+#playerIcon {
+    width: 100px;
+    height: 100px;
+    grid-column: 1/2;
+}
+
+#playerName{
+    font-size: 1.5em;
 }
