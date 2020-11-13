@@ -24,6 +24,8 @@ let {
   CONST_RANKED_FLEX,
 
   FB_COL_USERS,
+  FB_FIELD_FAVORITES,
+
   FB_COL_MATCHES,
   FB_COL_LIVE_MATCHES,
 } = require("./constants");
@@ -85,8 +87,98 @@ let checkMatch = async (matchID, region, batch) => {
 };
 
 /**
- * @param  {} data      {summonerName: "FwiedWice", region: "NA1", fetchMatch: false}
- * @param  {} context   auth context
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
+ */
+exports.followPlayer = functions.https.onCall(async (data, context) => {
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) {
+    return { suc: false };
+  }
+
+  let dbSummonerID = region + summonerName;
+
+  try {
+    await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .update({
+        [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayUnion(
+          dbSummonerID
+        ),
+      });
+
+    return { suc: true };
+  } catch (err) {
+    return { suc: false };
+  }
+});
+
+/**
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
+ */
+exports.unfollowPlayer = functions.https.onCall(async (data, context) => {
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) {
+    return { suc: false };
+  }
+
+  let dbSummonerID = region + summonerName;
+
+  try {
+    await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .update({
+        [FB_FIELD_FAVORITES]: admin.firestore.FieldValue.arrayRemove(
+          dbSummonerID
+        ),
+      });
+
+    return { suc: true };
+  } catch (err) {
+    return { suc: false };
+  }
+});
+
+/**
+ * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
+ * @param  {} context auth context (automatic)
+ */
+exports.doesFollow = functions.https.onCall(async (data, context) => {
+  let summonerName = data.summonerName.trim().toLowerCase();
+  let region = data.region.trim().toLowerCase();
+
+  if (context.auth === null || context.auth.uid === null) {
+    return { follows: null };
+  }
+
+  let dbSummonerID = region + summonerName;
+  try {
+    let dbRef = await admin
+      .firestore()
+      .collection(FB_COL_USERS)
+      .doc(context.auth.uid)
+      .get();
+
+    let favorites = dbRef.data()[FB_FIELD_FAVORITES];
+
+    return { follows: favorites.includes(dbSummonerID) };
+  } catch (err) {
+    return { follows: null, err };
+  }
+});
+
+/**
+ * @param  {} data      {summonerName: "FwiedWice", region: "NA1", fetchMatch: true}
+ * @param  {} context   auth context (automatic)
  *
  * initial fetching of summoner data first time they are in the DB
  */
@@ -190,6 +282,11 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
   }
 });
 
+/**
+ * @param  {} user
+ * 
+ * automatically gets called when user registers
+ */
 exports.setupUser = functions.auth.user().onCreate(async (user) => {
   let uid = user.uid;
   print(uid);
@@ -200,7 +297,7 @@ exports.setupUser = functions.auth.user().onCreate(async (user) => {
       favorites: [],
     };
     await dbRef.set(basicUser);
-    print("Finished setting up user")
+    print("Finished setting up user");
   } catch (err) {
     print(err);
     return { err };
