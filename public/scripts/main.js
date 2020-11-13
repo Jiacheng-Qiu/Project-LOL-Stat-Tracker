@@ -101,8 +101,8 @@ rhit.RegisterPageController = class***REMOVED***
 		    window.location.href = "/login.html";
         ***REMOVED***;
 
-        const account = document.querySelector("#registerAccount");
-        const password = document.querySelector("#registerPassword");
+        let account = document.querySelector("#registerAccount");
+        let password = document.querySelector("#registerPassword");
         document.querySelector("#register").onclick = (event) => ***REMOVED***
             firebase.auth().createUserWithEmailAndPassword(account.value, password.value).catch(function(error) ***REMOVED***
                 console.log("error: ", error.code, error.message);
@@ -128,7 +128,25 @@ rhit.SearchPageController = class***REMOVED***
             console.log("Searching");
             searchText = document.querySelector("#searchText").value;
             if (region && searchText)***REMOVED***
-               new rhit.FetchPlayerInfo(searchText, region);
+               let result = new rhit.FetchPlayerInfo(searchText, region).fetchPlayer();
+               console.log(result);
+               const newCard = htmlToElement(`
+                <div id="searchResult" class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">$***REMOVED***result.name***REMOVED***</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            Summoner level: $***REMOVED***result.summonerLevel***REMOVED***
+                        </h6>
+                    </div>
+                </div>`);
+                newCard.onclick = (event) => ***REMOVED***
+                    window.location.href = `/detail.html?region=$***REMOVED***selectedRegion***REMOVED***&summoner=$***REMOVED***result.data.name***REMOVED***`;
+                ***REMOVED***;
+                const oldCard = document.querySelector("#searchResult");
+                console.log(oldCard);
+                oldCard.removeAttribute("id");
+                oldCard.hidden = true;
+                oldCard.parentElement.appendChild(newCard);
             ***REMOVED*** else ***REMOVED***
                console.log("One of the two necessary information is missing!");
             ***REMOVED***
@@ -142,7 +160,13 @@ rhit.DetailPageController = class***REMOVED***
     constructor() ***REMOVED***
         new rhit.AccountController();
 
-        // window.location.href = `/detail.html?uid=$***REMOVED***1***REMOVED***`;
+        console.log();
+        let urlParams = new URLSearchParams(window.location.search);
+        let region = urlParams.get("region");
+        let summoner = urlParams.get("summoner");
+
+        // Refresh match history based on player action
+
 
         // TODO: Favorite and unfavorite
         document.querySelector('#favoriteButton').onclick = (event) => ***REMOVED***
@@ -157,31 +181,13 @@ rhit.DetailPageController = class***REMOVED***
 
 rhit.FetchPlayerInfo = class***REMOVED***
     constructor(playerName, selectedRegion)***REMOVED***
-        var call = firebase.functions().httpsCallable("getSummonerFull");
-        call(***REMOVED*** summonerName: playerName, region: selectedRegion, fetchMatch: true ***REMOVED***)
-        .then(function (result) ***REMOVED***
-            // Read result of the Cloud Function.
-            console.log(result.data);
-            const newCard = htmlToElement(`
-            <div id="searchResult" class="card">
-                <div class="card-body">
-                    <h5 class="card-title">$***REMOVED***result.data.name***REMOVED***</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        Summoner level: $***REMOVED***result.data.summonerLevel***REMOVED***
-                    </h6>
-                </div>
-            </div>`);
+        this.playerName = playerName;
+        this.selectedRegion = selectedRegion;
+    ***REMOVED***
 
-
-            const oldCard = document.querySelector("#searchResult");
-            console.log(oldCard);
-            oldCard.removeAttribute("id");
-            oldCard.hidden = true;
-            oldCard.parentElement.appendChild(newCard);
-        ***REMOVED***)
-        .catch((err) => ***REMOVED***
-            console.log(err);
-        ***REMOVED***);
+    fetchPlayer = async() => ***REMOVED***
+        let result = await firebase.functions().httpsCallable("getSummonerFull")(***REMOVED***summonerName: this.playerName, region: this.selectedRegion, fetchMatch: true ***REMOVED***);
+        return result;
     ***REMOVED***
 ***REMOVED***
 
