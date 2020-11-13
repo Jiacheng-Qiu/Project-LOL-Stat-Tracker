@@ -137,7 +137,7 @@ rhit.DetailPageController = class***REMOVED***
     constructor() ***REMOVED***
         new rhit.AccountController();
 
-        window.location.href = `/detail.html?uid=$***REMOVED***1***REMOVED***`;
+        // window.location.href = `/detail.html?uid=$***REMOVED***1***REMOVED***`;
 
         // TODO: Favorite and unfavorite
         document.querySelector('#favoriteButton').onclick = (event) => ***REMOVED***
@@ -223,7 +223,18 @@ rhit.checkForRedirects = function() ***REMOVED***
 ***REMOVED***;
 
 rhit.main = function () ***REMOVED***
-	console.log("Ready");
+    console.log("Ready");
+    var testCall = firebase.functions().httpsCallable("getSummonerFull");
+
+    testCall(***REMOVED*** summonerName: "fwiedwice", region: "na1", fetchMatch: true ***REMOVED***)
+    .then(function (result) ***REMOVED***
+        // Read result of the Cloud Function.
+        console.log(result.data);
+        // ...
+    ***REMOVED***)
+    .catch((err) => ***REMOVED***
+        console.log(err);
+    ***REMOVED***);
     rhit.fbAuthManager = new rhit.FbAuthManager();
     rhit.fbAuthManager.beginListening(() => ***REMOVED***
         console.log("Auth listening");
