@@ -11,6 +11,15 @@ var rhit = rhit || {};
 rhit.fbPlayersManager = null;
 rhit.fbAuthManager = null;
 
+// Functions as its name
+// from: https://stackoverflow.com/questions/3103962/converting-html-string-into-dom-elements
+function htmlToElement(html) {
+    var template = document.createElement("template");
+    html = html.trim();
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
 // Change password
 rhit.AccountController = class{
     constructor() {
@@ -110,7 +119,7 @@ rhit.SearchPageController = class{
         let searchText = "";
         // Deal with dropdown selection (solution adapted)
         $('#regionSearch a').on('click', function(){
-            region = $(this).text();
+            region = $(this).text().trim().toLowerCase();;
             document.querySelector("#dropdownMenuButton").innerHTML = region;
         });
 
@@ -119,17 +128,13 @@ rhit.SearchPageController = class{
             console.log("Searching");
             searchText = document.querySelector("#searchText").value;
             if (region && searchText){
-                rhit.searchPlayer(searchText, region);
+               new rhit.FetchPlayerInfo(searchText, region);
             } else {
-                console.log("One of the two necessary information is missing!");
+               console.log("One of the two necessary information is missing!");
             }
         };
 
     }
-}
-
-rhit.searchPlayer = function(playerName, region) {
-    // TODO: to be combined with didi functions for results
 }
 
 
@@ -141,18 +146,42 @@ rhit.DetailPageController = class{
 
         // TODO: Favorite and unfavorite
         document.querySelector('#favoriteButton').onclick = (event) => {
-            let urlParams = new URLSearchParams(window.location.search);
-            let region = urlParams.get("region");
-            let summoner = urlParams.get("summoner");
-
-
-
-            firebase.functions().httpsCallable("doesFollow")({summonerName: summoner, region});
+            
         };
 
         document.querySelector('#refreshButton').onclick = (event) => {
             
         };
+    }
+}
+
+rhit.FetchPlayerInfo = class{
+    constructor(playerName, selectedRegion){
+        var call = firebase.functions().httpsCallable("getSummonerFull");
+        call({ summonerName: playerName, region: selectedRegion, fetchMatch: true })
+        .then(function (result) {
+            // Read result of the Cloud Function.
+            console.log(result.data);
+            const newCard = htmlToElement(`
+            <div id="searchResult" class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${result.data.name}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Summoner level: ${result.data.summonerLevel}
+                    </h6>
+                </div>
+            </div>`);
+
+
+            const oldCard = document.querySelector("#searchResult");
+            console.log(oldCard);
+            oldCard.removeAttribute("id");
+            oldCard.hidden = true;
+            oldCard.parentElement.appendChild(newCard);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }
 }
 
@@ -230,9 +259,6 @@ rhit.checkForRedirects = function() {
 
 rhit.main = function () {
     console.log("Ready");
-
-    firebase.functions().useEmulator("localhost", 5001);
-
     rhit.fbAuthManager = new rhit.FbAuthManager();
     rhit.fbAuthManager.beginListening(() => {
         console.log("Auth listening");
