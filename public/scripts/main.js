@@ -3,7 +3,7 @@
  * Provides the JavaScript interactions for all pages.
  *
  * @author 
- * qiuj1
+ * qiuj1 chaiq
  */
 
 var rhit = rhit || ***REMOVED******REMOVED***;
@@ -132,6 +132,24 @@ rhit.searchPlayer = function(playerName, region) ***REMOVED***
     // TODO: to be combined with didi functions for results
 ***REMOVED***
 
+
+rhit.DetailPageController = class***REMOVED***
+    constructor() ***REMOVED***
+        new rhit.AccountController();
+
+        window.location.href = `/detail.html?uid=$***REMOVED***1***REMOVED***`;
+
+        // TODO: Favorite and unfavorite
+        document.querySelector('#favoriteButton').onclick = (event) => ***REMOVED***
+            
+        ***REMOVED***;
+
+        document.querySelector('#refreshButton').onclick = (event) => ***REMOVED***
+            
+        ***REMOVED***;
+    ***REMOVED***
+***REMOVED***
+
 rhit.initializePage = function() ***REMOVED***
     if (document.querySelector("#loginPage")) ***REMOVED***
 		console.log("On the login page");
@@ -148,7 +166,11 @@ rhit.initializePage = function() ***REMOVED***
     if (document.querySelector("#searchPage")) ***REMOVED***
 		console.log("On the search page");
 		new rhit.SearchPageController();
-	***REMOVED***
+    ***REMOVED***
+    if (document.querySelector("#detailPage")) ***REMOVED***
+		console.log("On the detail page");
+		new rhit.DetailPageController();
+    ***REMOVED***
 ***REMOVED***
 
 rhit.FbAuthManager = class ***REMOVED***
