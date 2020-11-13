@@ -169,7 +169,7 @@ rhit.DetailPageController = class {
 
     let urlParams = new URLSearchParams(window.location.search);
     rhit.fetchPlayer(urlParams.get("summoner"), urlParams.get("region")).then(
-        result => {
+        async (result) => {
             //TODO: Fetch if the user have favorited the player
             // Refresh player info based on player action (The player icon image is loaded from op.gg database)
             const newCard = htmlToElement(`
@@ -193,7 +193,7 @@ rhit.DetailPageController = class {
             const matchesData = firebase.firestore().collection("Matches");
             const matchList = htmlToElement(`<div id="matchHistory"></div>`);
             for (let i = 0; i < 3; i++) {
-                var matchDetail = matchesData.doc(result.data.recentMatches[i]);
+                var matchDetail = await matchesData.doc(result.data.recentMatches[i]).get();
                 var recentMatch = htmlToElement(`<div class="card"></div>`);
                 recentMatch.appendChild(htmlToElement(`
                     <div class="card-body" style="background-color:#8ed49a; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">Victory</h5>
@@ -205,13 +205,21 @@ rhit.DetailPageController = class {
                     <div class="card-body"> 
                     </div>
                 </div>`);
-                for (let j = 1; j < 11; j ++){
-                    playerList.appendChild(htmlToElement(`<div class="card-subtitle" style="background-color:#8ebad4;">${matchDetail.data.participants.j.gameData.championID}&nbsp;&nbsp;Empertoast&nbsp;&nbsp;0/50/1&nbsp;&nbsp;294</div>
+                let waaak = matchDetail.data().participants;
+                for (let key in waaak){
+                    playerList.appendChild(htmlToElement(`
+                    <div class="card-subtitle" style="background-color:#8ebad4;">${waaak[key].gameData.championId}&nbsp;&nbsp;Empertoast&nbsp;&nbsp;0/50/1&nbsp;&nbsp;294</div>
                     `));
-                }
+                };
                 recentMatch.appendChild(playerList);
-                matchList.appendChild(matchDetail);
+                matchList.appendChild(recentMatch);
             }
+
+            const oldMatch = document.querySelector("#matchHistory");
+            console.log(oldCard);
+            oldMatch.removeAttribute("id");
+            oldMatch.hidden = true;
+            oldMatch.parentElement.appendChild(matchList);
         
             // TODO: Favorite and unfavorite
             document.querySelector("#favoriteButton").onclick = (event) => {
