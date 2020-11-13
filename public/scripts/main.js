@@ -170,7 +170,11 @@ rhit.DetailPageController = class{
 
         // TODO: Favorite and unfavorite
         document.querySelector('#favoriteButton').onclick = (event) => {
-            
+            let urlParams = new URLSearchParams(window.location.search);
+            let region = urlParams.get("region");
+            let summoner = urlParams.get("summoner");
+
+            firebase.functions().httpsCallable("doesFollow")({summonerName: summoner, region});
         };
 
         document.querySelector('#refreshButton').onclick = (event) => {
