@@ -206,10 +206,28 @@ rhit.DetailPageController = class {
                     </div>
                 </div>`);
                 let waaak = matchDetail.data().participants;
+                let playerCounter = 0;
                 for (let key in waaak){
-                    playerList.appendChild(htmlToElement(`
-                    <div class="card-subtitle" style="background-color:#8ebad4;">${waaak[key].gameData.championId}&nbsp;&nbsp;Empertoast&nbsp;&nbsp;0/50/1&nbsp;&nbsp;294</div>
+                    playerCounter ++;
+                    if (playerCounter <= 5){
+                      playerList.appendChild(htmlToElement(`
+                      <div class="card-subtitle" style="background-color:#8ebad4;">${waaak[key].gameData.championId}
+                                                                        &nbsp;&nbsp;${waaak[key].player.summonerName}
+                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
+                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}</div>
+                      `));
+                    } else {
+                      playerList.appendChild(htmlToElement(`
+                      <div class="card-subtitle" style="background-color:#ee9b9b;">${waaak[key].gameData.championId}
+                                                                        &nbsp;&nbsp;${waaak[key].player.summonerName}
+                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
+                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}</div>
                     `));
+                    }
+                    if (playerCounter == 5){
+                      playerList.appendChild(htmlToElement(`<hr><hr>`));
+                    }
+
                 };
                 recentMatch.appendChild(playerList);
                 matchList.appendChild(recentMatch);
