@@ -69,3 +69,5 @@ lol-stat-tracker-firebase-adminsdk.json
 
 # functions/riotkey.json
 # riotkey.json
+
+.DS_Store
