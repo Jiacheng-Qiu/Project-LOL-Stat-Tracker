@@ -127,8 +127,8 @@ rhit.SearchPageController = class {
     let searchText = "";
     // Deal with dropdown selection (solution adapted)
     $("#regionSearch a").on("click", function () {
-      region = $(this).text().trim().toLowerCase();
-      document.querySelector("#dropdownMenuButton").innerHTML = region;
+        region = $(this).text().trim().toLowerCase();
+        document.querySelector("#dropdownMenuButton").innerHTML = region;
     });
 
     // Takes info when search
@@ -149,7 +149,7 @@ rhit.SearchPageController = class {
                     </div>
                 </div>`);
         newCard.onclick = (event) => {
-          window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
+            window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
         };
         const oldCard = document.querySelector("#searchResult");
         console.log(oldCard);
@@ -167,26 +167,76 @@ rhit.DetailPageController = class {
   constructor() {
     new rhit.AccountController();
 
-    console.log();
     let urlParams = new URLSearchParams(window.location.search);
-    let region = urlParams.get("region");
-    let summoner = urlParams.get("summoner");
+    rhit.fetchPlayer(urlParams.get("summoner"), urlParams.get("region")).then(
+        async (result) => {
+            //TODO: Fetch if the user have favorited the player
+            // Refresh player info based on player action (The player icon image is loaded from op.gg database)
+            const newCard = htmlToElement(`
+                <div id="playerInfo">       
+                    <img src="//opgg-static.akamaized.net/images/profile_icons/profileIcon${result.data.profileIconId}.jpg?image=c_scale,q_auto&amp;v=1518361200" id="playerIcon">
+                    <div id="Profile">
+                        <div class="Information">
+                            <span id="playerName">${result.data.name}</span>
+                            <a type="button" class="btn btn-primary" id="favoriteButton" disabled><i class="material-icons">favorite_border</i></a>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="refreshButton"><i class="material-icons">update</i>Refresh</button>
+                    </div>
+                </div>`);
+            const oldCard = document.querySelector("#playerInfo");
+            console.log(oldCard);
+            oldCard.removeAttribute("id");
+            oldCard.hidden = true;
+            oldCard.parentElement.appendChild(newCard);
 
-    // Refresh match history based on player action
+            // Refresh match history
+            const matchesData = firebase.firestore().collection("Matches");
+            const matchList = htmlToElement(`<div id="matchHistory"></div>`);
+            for (let i = 0; i < 3; i++) {
+                var matchDetail = await matchesData.doc(result.data.recentMatches[i]).get();
+                var recentMatch = htmlToElement(`<div class="card"></div>`);
+                recentMatch.appendChild(htmlToElement(`
+                    <div class="card-body" style="background-color:#8ed49a; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">Victory</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ranked 20 min ago</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">25 minutes</h6>
+                    </div>`));
+                var playerList = htmlToElement(`
+                <div class="collapse" id="${result.data.recentMatches[i]}">
+                    <div class="card-body"> 
+                    </div>
+                </div>`);
+                let waaak = matchDetail.data().participants;
+                for (let key in waaak){
+                    playerList.appendChild(htmlToElement(`
+                    <div class="card-subtitle" style="background-color:#8ebad4;">${waaak[key].gameData.championId}&nbsp;&nbsp;Empertoast&nbsp;&nbsp;0/50/1&nbsp;&nbsp;294</div>
+                    `));
+                };
+                recentMatch.appendChild(playerList);
+                matchList.appendChild(recentMatch);
+            }
 
-    // TODO: Favorite and unfavorite
-    document.querySelector("#favoriteButton").onclick = (event) => {
-      let urlParams = new URLSearchParams(window.location.search);
-      let region = urlParams.get("region");
-      let summoner = urlParams.get("summoner");
-
-      firebase.functions().httpsCallable("doesFollow")({
-        summonerName: summoner,
-        region,
-      });
-    };
-
-    document.querySelector("#refreshButton").onclick = (event) => {};
+            const oldMatch = document.querySelector("#matchHistory");
+            console.log(oldCard);
+            oldMatch.removeAttribute("id");
+            oldMatch.hidden = true;
+            oldMatch.parentElement.appendChild(matchList);
+        
+            // TODO: Favorite and unfavorite
+            document.querySelector("#favoriteButton").onclick = (event) => {
+              let urlParams = new URLSearchParams(window.location.search);
+              let region = urlParams.get("region");
+              let summoner = urlParams.get("summoner");
+        
+              firebase.functions().httpsCallable("doesFollow")({
+                summonerName: summoner,
+                region,
+              });
+            };
+        
+            document.querySelector("#refreshButton").onclick = (event) => {};}
+    ).catch((err) => {
+        console.log(err);
+    });
   }
 };
 
