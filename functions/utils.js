@@ -26,7 +26,7 @@ const KEY = require("./riotkey.json")["key"];
 const ARGS = {
   "X-Riot-Token": KEY,
 };
-const MATCH_COUNT = 3;
+const MATCH_COUNT = 5;
 
 /**
  * @param  {} keys    list of keys
