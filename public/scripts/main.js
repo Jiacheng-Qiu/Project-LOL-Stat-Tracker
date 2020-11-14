@@ -167,14 +167,20 @@ rhit.DetailPageController = class {
   constructor() {
     new rhit.AccountController();
 
+    // Search redirect
+    document.querySelector("#searchRedirect").onclick = (event) => {
+      console.log("Redirecting to search page");
+      window.location.href = "/search.html";
+    };
+
     let urlParams = new URLSearchParams(window.location.search);
     rhit.fetchPlayer(urlParams.get("summoner"), urlParams.get("region")).then(
         async (result) => {
             //TODO: Fetch if the user have favorited the player
-            // Refresh player info based on player action (The player icon image is loaded from op.gg database)
+            // Refresh player info based on player action
             const newCard = htmlToElement(`
                 <div id="playerInfo">       
-                    <img src="//opgg-static.akamaized.net/images/profile_icons/profileIcon${result.data.profileIconId}.jpg?image=c_scale,q_auto&amp;v=1518361200" id="playerIcon">
+                    <img src="//raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${result.data.profileIconId}.jpg" id="playerIcon">
                     <div id="Profile">
                         <div class="Information">
                             <span id="playerName">${result.data.name}</span>
@@ -184,7 +190,6 @@ rhit.DetailPageController = class {
                     </div>
                 </div>`);
             const oldCard = document.querySelector("#playerInfo");
-            console.log(oldCard);
             oldCard.removeAttribute("id");
             oldCard.hidden = true;
             oldCard.parentElement.appendChild(newCard);
@@ -192,14 +197,13 @@ rhit.DetailPageController = class {
             // Refresh match history
             const matchesData = firebase.firestore().collection("Matches");
             const matchList = htmlToElement(`<div id="matchHistory"></div>`);
-            for (let i = 0; i < 3; i++) {
+
+            // Load the champion data file
+
+            for (let i = 0; i < result.data.recentMatches.length; i++) {
                 var matchDetail = await matchesData.doc(result.data.recentMatches[i]).get();
                 var recentMatch = htmlToElement(`<div class="card"></div>`);
-                recentMatch.appendChild(htmlToElement(`
-                    <div class="card-body" style="background-color:#8ed49a; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">Victory</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Ranked 20 min ago</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">25 minutes</h6>
-                    </div>`));
+                
                 var playerList = htmlToElement(`
                 <div class="collapse" id="${result.data.recentMatches[i]}">
                     <div class="card-body"> 
@@ -209,21 +213,35 @@ rhit.DetailPageController = class {
                 let playerCounter = 0;
                 for (let key in waaak){
                     playerCounter ++;
+                    if (waaak[key].player.summonerName == urlParams.get("summoner")){
+                      var matchResult = "";
+                      var borderColor = "";
+                      if ((playerCounter <= 5 && matchDetail.data().teams[100] == true) || (playerCounter > 5 && matchDetail.data().teams[200] == true)){
+                        matchResult = "Victory";
+                        borderColor = "8ed49a";
+                      } else {
+                        matchResult = "Defeat";
+                        borderColor = "ee9b9b";
+                      }
+                      recentMatch.appendChild(htmlToElement(`
+                        <div class="card-body" style="background-color:#${borderColor}; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">${matchResult}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Game type: ${matchDetail.data().gameMode}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Lasted ${Math.round(parseInt(matchDetail.data().gameDuration)/60)} minutes</h6>
+                        </div>`));
+                    }
+                    
+                    let color = "";
                     if (playerCounter <= 5){
-                      playerList.appendChild(htmlToElement(`
-                      <div class="card-subtitle" style="background-color:#8ebad4;">${waaak[key].gameData.championId}
+                      color = "8ebad4";
+                    } else {
+                      color = "ee9b9b";
+                    }
+                    playerList.appendChild(htmlToElement(`
+                      <div class="card-subtitle" style="background-color:#${color};">${CHAMPION[waaak[key].gameData.championId]}
                                                                         &nbsp;&nbsp;${waaak[key].player.summonerName}
                                                                         &nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
                                                                         &nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}</div>
                       `));
-                    } else {
-                      playerList.appendChild(htmlToElement(`
-                      <div class="card-subtitle" style="background-color:#ee9b9b;">${waaak[key].gameData.championId}
-                                                                        &nbsp;&nbsp;${waaak[key].player.summonerName}
-                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
-                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}</div>
-                    `));
-                    }
                     if (playerCounter == 5){
                       playerList.appendChild(htmlToElement(`<hr><hr>`));
                     }
@@ -234,7 +252,6 @@ rhit.DetailPageController = class {
             }
 
             const oldMatch = document.querySelector("#matchHistory");
-            console.log(oldCard);
             oldMatch.removeAttribute("id");
             oldMatch.hidden = true;
             oldMatch.parentElement.appendChild(matchList);
@@ -251,7 +268,9 @@ rhit.DetailPageController = class {
               });
             };
         
-            document.querySelector("#refreshButton").onclick = (event) => {};}
+            document.querySelector("#refreshButton").onclick = (event) => {
+
+            };}
     ).catch((err) => {
         console.log(err);
     });
