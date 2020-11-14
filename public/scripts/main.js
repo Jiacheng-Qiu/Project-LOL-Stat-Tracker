@@ -326,7 +326,7 @@ rhit.FbAuthManager = class {
   }
 
   changePassword(newPassword) {
-    user
+    this._user
       .updatePassword(newPassword)
       .then(function () {})
       .catch(function (error) {
