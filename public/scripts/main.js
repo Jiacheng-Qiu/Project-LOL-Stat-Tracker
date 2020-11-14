@@ -80,10 +80,17 @@ rhit.ListPageController = class {
 
     // TODO: list user's favorites if there is any
     // First check if the user is logged in
-    if (rhit.fbAuthManager.isSignedIn){
-      let favList = firebase.firestore().collection("Users").doc(rhit.fbAuthManager.uid);
+    if (rhit.fbAuthManager.isSignedIn) {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(rhit.fbAuthManager.uid)
+        .get()
+        .then((res) => res.data())
+        .then((res) => {})
+        .catch((err) => console.log(err));
       let favContainer = htmlToElement('<div id="favContainer"></div>');
-      for (let fav in favList){
+      for (let fav in favList) {
         let favCard = htmlToElement(`
             <div class="card">
               <div class="card-body">
@@ -91,7 +98,7 @@ rhit.ListPageController = class {
               </div>
             </div>`);
         favCard.onclick = (event) => {
-            window.location.href = `/detail.html?region=${fav.region}&summoner=${fav.name}`;
+          window.location.href = `/detail.html?region=${fav.region}&summoner=${fav.name}`;
         };
         favContainer.appendChild(favCard);
       }
@@ -100,7 +107,7 @@ rhit.ListPageController = class {
       oldFav.hidden = true;
       oldFav.parentElement.appendChild(favList);
     }
-    
+
     new rhit.AccountController();
   }
 };
@@ -153,8 +160,8 @@ rhit.SearchPageController = class {
     let searchText = "";
     // Deal with dropdown selection (solution adapted)
     $("#regionSearch a").on("click", function () {
-        region = $(this).text().trim().toLowerCase();
-        document.querySelector("#dropdownMenuButton").innerHTML = region;
+      region = $(this).text().trim().toLowerCase();
+      document.querySelector("#dropdownMenuButton").innerHTML = region;
     });
 
     // Takes info when search
@@ -162,9 +169,9 @@ rhit.SearchPageController = class {
       console.log("Searching");
       searchText = document.querySelector("#searchText").value;
       if (region && searchText) {
-        console.log("stuff:", region, searchText)
+        console.log("stuff:", region, searchText);
         let result = await rhit.fetchPlayer(searchText, region);
-        console.log(result)
+        console.log(result);
         const newCard = htmlToElement(`
                 <div id="searchResult" class="card">
                     <div class="card-body">
@@ -175,7 +182,7 @@ rhit.SearchPageController = class {
                     </div>
                 </div>`);
         newCard.onclick = (event) => {
-            window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
+          window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
         };
         const oldCard = document.querySelector("#searchResult");
         oldCard.removeAttribute("id");
@@ -199,20 +206,26 @@ rhit.DetailPageController = class {
     };
 
     let urlParams = new URLSearchParams(window.location.search);
-    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region").trim().toLowerCase()).then(
-        async (result) => {
-            // Refresh player info based on player action
-            let doesFollow = await firebase.functions().httpsCallable("doesFollow")({
-              summonerName: urlParams.get("summoner").trim().toLowerCase(),
-              region: urlParams.get("region").trim().toLowerCase()
-            });
-            let followIcon = "";
-            if (doesFollow.data["follows"]){
-              followIcon = "favorite";
-            } else {
-              followIcon = "favorite_border";
-            }
-            const newCard = htmlToElement(`
+    rhit
+      .fetchPlayer(
+        urlParams.get("summoner").trim().toLowerCase(),
+        urlParams.get("region").trim().toLowerCase()
+      )
+      .then(async (result) => {
+        // Refresh player info based on player action
+        let doesFollow = await firebase.functions().httpsCallable("doesFollow")(
+          {
+            summonerName: urlParams.get("summoner").trim().toLowerCase(),
+            region: urlParams.get("region").trim().toLowerCase(),
+          }
+        );
+        let followIcon = "";
+        if (doesFollow.data["follows"]) {
+          followIcon = "favorite";
+        } else {
+          followIcon = "favorite_border";
+        }
+        const newCard = htmlToElement(`
                 <div id="playerInfo">       
                     <img src="//raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${result.data.profileIconId}.jpg" id="playerIcon">
                     <div id="Profile">
@@ -223,84 +236,108 @@ rhit.DetailPageController = class {
                         <button type="button" class="btn btn-primary" id="refreshButton"><i class="material-icons">update</i>Refresh</button>
                     </div>
                 </div>`);
-            const oldCard = document.querySelector("#playerInfo");
-            oldCard.removeAttribute("id");
-            oldCard.hidden = true;
-            oldCard.parentElement.appendChild(newCard);
+        const oldCard = document.querySelector("#playerInfo");
+        oldCard.removeAttribute("id");
+        oldCard.hidden = true;
+        oldCard.parentElement.appendChild(newCard);
 
-            let isLiveCard = document.querySelector("#isLive");
-            let isLive = result.data.isLive;
-            if(isLive) {
-              isLiveCard.innerHTML = "Live right now!";
-            } else {
-              isLiveCard.innerHTML = "";
+        let isLiveCard = document.querySelector("#isLive");
+        let isLive = result.data.isLive;
+        if (isLive) {
+          isLiveCard.innerHTML = "Live right now!";
+        } else {
+          isLiveCard.innerHTML = "";
+        }
+
+        // Refresh match history
+        const matchesData = firebase.firestore().collection("Matches");
+        const matchList = htmlToElement(`<div id="matchHistory"></div>`);
+
+        // Load the champion data file
+
+        for (let i = 0; i < result.data.recentMatches.length; i++) {
+          var matchDetail = await matchesData
+            .doc(result.data.recentMatches[i])
+            .get();
+          var recentMatch = htmlToElement(`<div class="card"></div>`);
+
+          let playerList = "";
+
+          // playerListOuter.innerHTML = playerList
+          let waaak = matchDetail.data().participants;
+          var matchTime = timeSince(matchDetail.data().gameCreation) + " ago";
+
+          let playerCounter = 0;
+          for (let key in waaak) {
+            playerCounter++;
+            if (
+              waaak[key].player.summonerName.trim().toLowerCase() ==
+              urlParams.get("summoner").trim().toLowerCase()
+            ) {
+              var matchResult = "";
+              var borderColor = "";
+              if (
+                (playerCounter <= 5 && matchDetail.data().teams[100] == true) ||
+                (playerCounter > 5 && matchDetail.data().teams[200] == true)
+              ) {
+                matchResult = "Victory";
+                borderColor = "8ed49a";
+              } else {
+                matchResult = "Defeat";
+                borderColor = "ee9b9b";
+              }
+              recentMatch.appendChild(
+                htmlToElement(`
+                        <div class="card-body" style="background-color:#${borderColor}; border-radius: 25px;" data-toggle="collapse" data-target="#${
+                  result.data.recentMatches[i]
+                }" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">${matchResult}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${matchTime}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Game type: ${
+                              matchDetail.data().gameMode
+                            }</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Lasted ${Math.round(
+                              parseInt(matchDetail.data().gameDuration) / 60
+                            )} minutes</h6>
+                        </div>`)
+              );
             }
 
-            // Refresh match history
-            const matchesData = firebase.firestore().collection("Matches");
-            const matchList = htmlToElement(`<div id="matchHistory"></div>`);
+            let color = "";
+            if (playerCounter <= 5) {
+              color = "8ebad4";
+            } else {
+              color = "ee9b9b";
+            }
 
-            // Load the champion data file
-
-            for (let i = 0; i < result.data.recentMatches.length; i++) {
-                var matchDetail = await matchesData.doc(result.data.recentMatches[i]).get();
-                var recentMatch = htmlToElement(`<div class="card"></div>`);
-                
-
-                let playerList = ""
-
-                // playerListOuter.innerHTML = playerList
-                let waaak = matchDetail.data().participants;
-                var matchTime = timeSince(matchDetail.data().gameCreation) + " ago"
-
-                let playerCounter = 0;
-                for (let key in waaak){
-                    playerCounter ++;
-                    if (waaak[key].player.summonerName.trim().toLowerCase() == urlParams.get("summoner").trim().toLowerCase()){
-                      var matchResult = "";
-                      var borderColor = "";
-                      if ((playerCounter <= 5 && matchDetail.data().teams[100] == true) || (playerCounter > 5 && matchDetail.data().teams[200] == true)){
-                        matchResult = "Victory";
-                        borderColor = "8ed49a";
-                      } else {
-                        matchResult = "Defeat";
-                        borderColor = "ee9b9b";
-                      }
-                      recentMatch.appendChild(htmlToElement(`
-                        <div class="card-body" style="background-color:#${borderColor}; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">${matchResult}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${matchTime}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Game type: ${matchDetail.data().gameMode}</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">Lasted ${Math.round(parseInt(matchDetail.data().gameDuration)/60)} minutes</h6>
-                        </div>`));
-                    }
-                    
-                    let color = "";
-                    if (playerCounter <= 5){
-                      color = "8ebad4";
-                    } else {
-                      color = "ee9b9b";
-                    }
-                    
-                    playerList +=`
+            playerList += `
                       <tr class="card-body" style="background-color:#${color}; border-radius: 10px;">
                         <td>${CHAMPION[waaak[key].gameData.championId]}</td>
                         <td>
                           <a 
-                            href="/detail.html?region=${urlParams.get("region").trim().toLowerCase()}&summoner=${waaak[key].player.summonerName}"
+                            href="/detail.html?region=${urlParams
+                              .get("region")
+                              .trim()
+                              .toLowerCase()}&summoner=${
+              waaak[key].player.summonerName
+            }"
                           >
                             ${waaak[key].player.summonerName}
                           <a>
                         </td>
-                        <td>${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}</td>
-                        <td>${waaak[key].gameData.stats.totalDamageDealtToChampions}</td>
+                        <td>${waaak[key].gameData.stats.kills}/${
+              waaak[key].gameData.stats.deaths
+            }/${waaak[key].gameData.stats.assists}</td>
+                        <td>${
+                          waaak[key].gameData.stats.totalDamageDealtToChampions
+                        }</td>
                         <td>${waaak[key].gameData.stats.goldEarned}</td>
                       </tr>
                       `;
-                    if (playerCounter == 5){
-                      playerList += `<tr><td>&nbsp;</td></tr>`;
-                    }
-                };
-                let playerListHTML =  htmlToElement(`
+            if (playerCounter == 5) {
+              playerList += `<tr><td>&nbsp;</td></tr>`;
+            }
+          }
+          let playerListHTML = htmlToElement(`
                    <div class="collapse" id="${result.data.recentMatches[i]}">
                     <table id="match${result.data.recentMatches[i]}">
                       <tr>
@@ -313,75 +350,88 @@ rhit.DetailPageController = class {
                       ${playerList}
                     </table>
                    </div>`);
-                
-                recentMatch.appendChild(playerListHTML);
-                matchList.appendChild(recentMatch);
-            }
 
-            const oldMatch = document.querySelector("#matchHistory");
-            oldMatch.removeAttribute("id");
-            oldMatch.hidden = true;
-            oldMatch.parentElement.appendChild(matchList);
-        
-            // TODO: Favorite and unfavorite
-            
-            let favButtonEvent = async(event) => {
-              // First disable the button
-              document.querySelector("#favoriteButton").disabled = true;
+          recentMatch.appendChild(playerListHTML);
+          matchList.appendChild(recentMatch);
+        }
 
-              let urlParams = new URLSearchParams(window.location.search);
-              let region = urlParams.get("region").trim().toLowerCase();
-              let summoner = urlParams.get("summoner").trim().toLowerCase();
-        
-              let doesFollow = await firebase.functions().httpsCallable("doesFollow")({
+        const oldMatch = document.querySelector("#matchHistory");
+        oldMatch.removeAttribute("id");
+        oldMatch.hidden = true;
+        oldMatch.parentElement.appendChild(matchList);
+
+        // TODO: Favorite and unfavorite
+
+        let favButtonEvent = async (event) => {
+          // First disable the button
+          document.querySelector("#favoriteButton").disabled = true;
+
+          let urlParams = new URLSearchParams(window.location.search);
+          let region = urlParams.get("region").trim().toLowerCase();
+          let summoner = urlParams.get("summoner").trim().toLowerCase();
+
+          let doesFollow = await firebase
+            .functions()
+            .httpsCallable("doesFollow")({
+            summonerName: summoner,
+            region,
+          });
+          console.log(doesFollow);
+          // If the user already follows the player, unfollow and change button
+          if (doesFollow.data["follows"]) {
+            console.log("unfollowing");
+            firebase
+              .functions()
+              .httpsCallable("unfollowPlayer")({
                 summonerName: summoner,
                 region,
+              })
+              .then(function () {
+                let newButton = htmlToElement(
+                  `<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite_border</i></a>`
+                );
+                const oldButton = document.querySelector("#favoriteButton");
+                oldButton.removeAttribute("id");
+                oldButton.hidden = true;
+                newButton.onclick = favButtonEvent;
+                oldButton.parentElement.appendChild(newButton);
+              })
+              .catch(function (error) {
+                console.log(error);
               });
-              console.log(doesFollow);
-              // If the user already follows the player, unfollow and change button
-              if (doesFollow.data["follows"]) {
-                console.log('unfollowing');
-                firebase.functions().httpsCallable("unfollowPlayer")({
-                  summonerName: summoner,
-                  region,
-                }).then(function () {
-                  let newButton = htmlToElement(`<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite_border</i></a>`);
-                  const oldButton = document.querySelector("#favoriteButton");
-                  oldButton.removeAttribute("id");
-                  oldButton.hidden = true;
-                  newButton.onclick = favButtonEvent;
-                  oldButton.parentElement.appendChild(newButton);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-              } else {
-                console.log('following');
-                firebase.functions().httpsCallable("followPlayer")({
-                  summonerName: summoner,
-                  region,
-                }).then(function () {
-                  let newButton = htmlToElement(`<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite</i></a>`);
-                  const oldButton = document.querySelector("#favoriteButton");
-                  oldButton.removeAttribute("id");
-                  oldButton.hidden = true;
-                  newButton.onclick = favButtonEvent;
-                  oldButton.parentElement.appendChild(newButton);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-              }
-            };
+          } else {
+            console.log("following");
+            firebase
+              .functions()
+              .httpsCallable("followPlayer")({
+                summonerName: summoner,
+                region,
+              })
+              .then(function () {
+                let newButton = htmlToElement(
+                  `<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite</i></a>`
+                );
+                const oldButton = document.querySelector("#favoriteButton");
+                oldButton.removeAttribute("id");
+                oldButton.hidden = true;
+                newButton.onclick = favButtonEvent;
+                oldButton.parentElement.appendChild(newButton);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        };
 
-            document.querySelector("#favoriteButton").onclick = favButtonEvent;
-        
-            document.querySelector("#refreshButton").onclick = (event) => {
-              location.reload();
-            };}
-    ).catch((err) => {
+        document.querySelector("#favoriteButton").onclick = favButtonEvent;
+
+        document.querySelector("#refreshButton").onclick = (event) => {
+          location.reload();
+        };
+      })
+      .catch((err) => {
         console.log(err);
-    });
+      });
   }
 };
 
