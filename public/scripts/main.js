@@ -111,12 +111,14 @@ rhit.ListPageController = class {
             let data = favorites[fav];
             let name = data.name;
             let region = fav.replace(name.trim().toLowerCase(), "");
+            let liveText = data.isLive ? "&nbsp;&nbsp;&nbsp;<- Currently in game!" : "";
             console.warn(name);
             console.warn(region);
             let favCard = htmlToElement(`
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">${name}</h5>
+                      <h5 class="card-title">${name}<span style="color:darkred";>${liveText}</span></h5>
+                      
                     </div>
                   </div>`);
             favCard.onclick = (event) => {
