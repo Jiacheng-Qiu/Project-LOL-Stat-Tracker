@@ -206,14 +206,18 @@ rhit.DetailPageController = class {
                 
                 var playerList = htmlToElement(`
                 <div class="collapse" id="${result.data.recentMatches[i]}">
-                    <div class="card-body"> 
+                    <div class="card-body"style="border-radius: 10px;"> Champion
+                      &nbsp;&nbsp;&nbsp;&nbsp;Summoner
+                      &nbsp;&nbsp;&nbsp;&nbsp;KDA
+                      &nbsp;&nbsp;&nbsp;&nbsp;Damage
+                      &nbsp;&nbsp;&nbsp;&nbsp;Gold
                     </div>
                 </div>`);
                 let waaak = matchDetail.data().participants;
                 let playerCounter = 0;
                 for (let key in waaak){
                     playerCounter ++;
-                    if (waaak[key].player.summonerName == urlParams.get("summoner")){
+                    if (waaak[key].player.summonerName.trim().toLowerCase() == urlParams.get("summoner").trim().toLowerCase()){
                       var matchResult = "";
                       var borderColor = "";
                       if ((playerCounter <= 5 && matchDetail.data().teams[100] == true) || (playerCounter > 5 && matchDetail.data().teams[200] == true)){
@@ -237,15 +241,15 @@ rhit.DetailPageController = class {
                       color = "ee9b9b";
                     }
                     playerList.appendChild(htmlToElement(`
-                      <div class="card-subtitle" style="background-color:#${color};">${CHAMPION[waaak[key].gameData.championId]}
-                                                                        &nbsp;&nbsp;${waaak[key].player.summonerName}
-                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
-                                                                        &nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}</div>
+                      <div class="card-body" style="background-color:#${color}; border-radius: 10px;">${CHAMPION[waaak[key].gameData.championId]}
+                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].player.summonerName}
+                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
+                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}
+                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.goldEarned}</div>
                       `));
                     if (playerCounter == 5){
                       playerList.appendChild(htmlToElement(`<hr><hr>`));
                     }
-
                 };
                 recentMatch.appendChild(playerList);
                 matchList.appendChild(recentMatch);
@@ -269,7 +273,7 @@ rhit.DetailPageController = class {
             };
         
             document.querySelector("#refreshButton").onclick = (event) => {
-
+              location.reload();
             };}
     ).catch((err) => {
         console.log(err);
