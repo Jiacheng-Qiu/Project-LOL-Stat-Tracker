@@ -174,7 +174,7 @@ rhit.DetailPageController = class {
     };
 
     let urlParams = new URLSearchParams(window.location.search);
-    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region")).then(
+    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region").trim().toLowerCase()).then(
         async (result) => {
             //TODO: Fetch if the user have favorited the player
             // Refresh player info based on player action
@@ -250,7 +250,13 @@ rhit.DetailPageController = class {
                     playerList +=`
                       <tr class="card-body" style="background-color:#${color}; border-radius: 10px;">
                         <td>${CHAMPION[waaak[key].gameData.championId]}</td>
-                        <td>${waaak[key].player.summonerName}</td>
+                        <td>
+                          <a 
+                            href="/detail.html?region=${urlParams.get("region").trim().toLowerCase()}&summoner=${waaak[key].player.summonerName}"
+                          >
+                            ${waaak[key].player.summonerName}
+                          <a>
+                        </td>
                         <td>${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}</td>
                         <td>${waaak[key].gameData.stats.totalDamageDealtToChampions}</td>
                         <td>${waaak[key].gameData.stats.goldEarned}</td>
