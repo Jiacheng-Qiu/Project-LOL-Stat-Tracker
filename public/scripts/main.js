@@ -174,7 +174,7 @@ rhit.DetailPageController = class {
     };
 
     let urlParams = new URLSearchParams(window.location.search);
-    rhit.fetchPlayer(urlParams.get("summoner"), urlParams.get("region")).then(
+    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region")).then(
         async (result) => {
             //TODO: Fetch if the user have favorited the player
             // Refresh player info based on player action
@@ -266,8 +266,8 @@ rhit.DetailPageController = class {
             // TODO: Favorite and unfavorite
             document.querySelector("#favoriteButton").onclick = (event) => {
               let urlParams = new URLSearchParams(window.location.search);
-              let region = urlParams.get("region");
-              let summoner = urlParams.get("summoner");
+              let region = urlParams.get("region").trim().toLowerCase();
+              let summoner = urlParams.get("summoner").trim().toLowerCase();
         
               firebase.functions().httpsCallable("doesFollow")({
                 summonerName: summoner,
