@@ -311,7 +311,9 @@ rhit.DetailPageController = class {
 
             playerList += `
                       <tr class="card-body" style="background-color:#${color}; border-radius: 10px;">
-                        <td>${CHAMPION[waaak[key].gameData.championId]}</td>
+                        
+                        <td><img src="//raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${waaak[key].gameData.championId}.png" style="width: 30px; height: 30px;">
+                        ${CHAMPION[waaak[key].gameData.championId]}</td>
                         <td>
                           <a 
                             href="/detail.html?region=${urlParams
