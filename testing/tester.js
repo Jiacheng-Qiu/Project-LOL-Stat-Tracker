@@ -57,6 +57,11 @@ let print = (args) => console.log(args);
 let testFunc = async (data) => {};
 
 let main = async () => {
+  let a = 1604838464627;
+  var d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+  d.setUTCSeconds(a);
+
+  console.warn(d.toString())
   // let smt = await getSummonerLiveGameByID(
   //   "NA1",
   //   "RRhxvlA13DV3wCzXFdKmVgu3z5TzSL7o2lCX7kn7SlJKm6Q"
@@ -64,15 +69,15 @@ let main = async () => {
   // let smt = await testFunc({ summonerName: "ElainnnneQ", region: "na1" });
   // console.log(smt);
   // console.log("finish");
-  testCall({ summonerName: "emperdust", region: "na1", fetchMatch: true })
-    .then(function (result) {
-      // Read result of the Cloud Function.
-      console.warn(result.data);
-      // ...
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // testCall({ summonerName: "emperdust", region: "na1", fetchMatch: true })
+  //   .then(function (result) {
+  //     // Read result of the Cloud Function.
+  //     console.warn(result.data);
+  //     // ...
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
   // console.log(extractKeys(["a", "b"], { a: 0, b: 1, c: 2 }));
   // console.log("\n\n");
   // console.log(await getSummonerByName("NA1", "fwiedwice"));

@@ -214,6 +214,8 @@ rhit.DetailPageController = class {
                     </div>
                 </div>`);
                 let waaak = matchDetail.data().participants;
+                var matchTime = timeSince(matchDetail.data().gameCreation) + " ago"
+
                 let playerCounter = 0;
                 for (let key in waaak){
                     playerCounter ++;
@@ -229,6 +231,7 @@ rhit.DetailPageController = class {
                       }
                       recentMatch.appendChild(htmlToElement(`
                         <div class="card-body" style="background-color:#${borderColor}; border-radius: 25px;" data-toggle="collapse" data-target="#${result.data.recentMatches[i]}" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title">${matchResult}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${matchTime}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Game type: ${matchDetail.data().gameMode}</h6>
                             <h6 class="card-subtitle mb-2 text-muted">Lasted ${Math.round(parseInt(matchDetail.data().gameDuration)/60)} minutes</h6>
                         </div>`));
