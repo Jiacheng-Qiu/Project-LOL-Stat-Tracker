@@ -50,7 +50,7 @@ var app = firebase.initializeApp({
 var functions = firebase.functions();
 
 firebase.functions().useEmulator("localhost", 5001);
-var testCall = firebase.functions().httpsCallable("followPlayer");
+var testCall = firebase.functions().httpsCallable("getSummonerFull");
 
 let print = (args) => console.log(args);
 
@@ -59,12 +59,12 @@ let testFunc = async (data) => {};
 let main = async () => {
   // let smt = await getSummonerLiveGameByID(
   //   "NA1",
-  //   "mmHHYsMn6SviKeJ86CTboLxuNZc4xYpo2alZmxGrkqpmgh8"
+  //   "RRhxvlA13DV3wCzXFdKmVgu3z5TzSL7o2lCX7kn7SlJKm6Q"
   // );
-  // let smt = await testFunc({ summonerName: "PerfectSniper", region: "EUN1" });
+  // let smt = await testFunc({ summonerName: "ElainnnneQ", region: "na1" });
   // console.log(smt);
   // console.log("finish");
-  testCall({ summonerName: "fwiedwice", region: "na1", fetchMatch: true })
+  testCall({ summonerName: "emperdust", region: "na1", fetchMatch: true })
     .then(function (result) {
       // Read result of the Cloud Function.
       console.warn(result.data);

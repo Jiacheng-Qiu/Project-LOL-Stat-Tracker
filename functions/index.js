@@ -8,6 +8,7 @@ admin.initializeApp();
 let {
   FB_COL_SUMMONERS,
   FB_FIELD_SUMMONER_ID,
+  FB_FIELD_IS_LIVE,
   FB_FIELD_ACCOUNT_ID,
   FB_FIELD_SUMMONER_TIER,
   FB_FIELD_SUMMONER_RANK,
@@ -37,6 +38,7 @@ let {
   getMatchByID,
   getMatchesByAccountID,
   parseMatch,
+  getSummonerLiveGameByID,
 } = require("./utils");
 
 // // Create and Deploy Your First Cloud Functions
@@ -148,7 +150,7 @@ exports.unfollowPlayer = functions.https.onCall(async (data, context) => {
   }
 });
 
-/**
+/**›
  * @param  {} data    {"summonerName": "FwiedWice", region:"na1"}
  * @param  {} context auth context (automatic)
  */
@@ -180,6 +182,13 @@ exports.doesFollow = functions.https.onCall(async (data, context) => {
  * @param  {} data      {summonerName: "FwiedWice", region: "NA1", fetchMatch: true}
  * @param  {} context   auth context (automatic)
  *
+ * { inLive: true } if succesfull
+ */
+
+/**
+ * @param  {} data      {summonerName: "FwiedWice", region: "NA1", fetchMatch: true}
+ * @param  {} context   auth context (automatic)
+ *
  * initial fetching of summoner data first time they are in the DB
  */
 exports.getSummonerFull = functions.https.onCall(async (data, context) => {
@@ -203,6 +212,7 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
     // if ref doesnt exist, we pull the data
     // if ref exists, and it's been more than COOLDOWN since we last pulled, we pull the data
     // if ref exists, and it's been less than COOLDOWN, we return what we have stored in the DB
+
     print("checking if summoner dbRef exists");
     if (!dbRef.exists) {
       print("New summoner entry");
@@ -212,6 +222,7 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
         print(summonerInfo.err);
         return { err: summonerInfo.err };
       }
+      summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
     } else {
       print("Exists in DB already");
       summonerInfo = dbRef.data();
@@ -231,6 +242,8 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
     summonerID = summonerInfo[FB_FIELD_SUMMONER_ID];
     accountID = summonerInfo[FB_FIELD_ACCOUNT_ID];
 
+    let isLive = await getSummonerLiveGameByID(region, summonerID);
+
     // get summoner leagues (SOLO/DUO, FLEX)
     print("Getting summoner leagues");
     let summonerLeagues = await getSummonerLeagueByID(region, summonerID);
@@ -242,6 +255,7 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
 
     let summoner = {
       ...summonerInfo,
+      isLive,
       [FB_FIELD_SUMMONER_LEAGUES]: summonerLeagues,
       [FB_FIELD_TIMESTAMP]: admin.firestore.Timestamp.now(),
     };
@@ -284,7 +298,7 @@ exports.getSummonerFull = functions.https.onCall(async (data, context) => {
 
 /**
  * @param  {} user
- * 
+ *
  * automatically gets called when user registers
  */
 exports.setupUser = functions.auth.user().onCreate(async (user) => {

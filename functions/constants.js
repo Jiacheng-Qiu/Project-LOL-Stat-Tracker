@@ -10,6 +10,8 @@ exports.FB_FIELD_QUEUE_TYPE = "queueType";
 exports.FB_FIELD_SUMMONER_LEAGUES = "summonerLeagues";
 exports.FB_FIELD_SUMMONER_MATCHES = "recentMatches";
 
+exports.FB_FIELD_IS_LIVE = "isLive";
+
 exports.FB_FIELD_TIMESTAMP = "timestamp";
 
 exports.CONST_RANKED_SOLO = "RANKED_SOLO_5x5";

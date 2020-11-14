@@ -45,7 +45,7 @@ exports.extractKeys = (keys, dict) => {
 
 /**
  * @param  {} rawMatch
- * 
+ *
  * get desired match data format + fields
  */
 exports.parseMatch = (rawMatch) => {
@@ -170,9 +170,10 @@ exports.getSummonerLiveGameByID = async (region, summonerID) => {
   try {
     let requestURL = `https://${region}.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${summonerID}`;
     let response = await req.get(requestURL).set(ARGS);
-    return response.body;
+    return true;
   } catch (err) {
-    return { err };
+    console.log("Error: Not in a live game");
+    return false;
   }
 };
 
