@@ -1,118 +1,156 @@
 body {
-    background: #888888;
+  background: #888888;
 }
 
 .navbar {
-    background-color: #000000;
-    color: white;
+  background-color: #000000;
+  color: white;
 }
 
 .page-container {
-    margin-top: 75px;
-    width: 100%;
+  margin-top: 75px;
+  width: 100%;
 }
 
-#listPage .card-title, #listPage .card-subtitle {
-    white-space: nowrap;
-    overflow: hidden;
-    display: block;
-    text-overflow: ellipsis;
+#listPage .card-title,
+#listPage .card-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
 }
 
-.card{
-    margin: 50px;
-    background-color: #CCCCCC;
-    border-radius: 25px;
+.card {
+  margin: 50px;
+  background-color: #cccccc;
+  border-radius: 25px;
 }
 
 .card-subtitle {
-    margin: 5px 0;
-    border-radius: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
 }
 
 #loginInfo {
-    display: block;
-    width:100%;
-    text-align: center;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
-#login, #register {
-    color: white;
-    background: orange;
-    font-size: 1.1em;
-    padding: 10px 30px;
-    border-radius: 5px;
+#login,
+#register {
+  color: white;
+  background: orange;
+  font-size: 1.1em;
+  padding: 10px 30px;
+  border-radius: 5px;
 }
 
-#loginRedirect, #registerRedirect {
-    color: blue;
-    padding: 10px 15px;
+#loginRedirect,
+#registerRedirect {
+  color: blue;
+  padding: 10px 15px;
 }
 
-.bmd-layout-content{
-    height: 100vh;
+.bmd-layout-content {
+  height: 100vh;
 }
 
 .bmd-layout-drawer > ul {
-    background-color: #cccccc;
+  background-color: #cccccc;
 }
 
-.bmd-layout-drawer>.list-group .list-group-item {
-    padding-right: 1rem;
-    padding-left: 1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
+.bmd-layout-drawer > .list-group .list-group-item {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 .list-group-item :first-child {
-    margin-right: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 #searchRedirect {
-    position: fixed;
-    right: 20px;
+  position: fixed;
+  right: 20px;
 }
 
 #searchPage > container {
-    width: 100%;
+  width: 100%;
 }
 
 #searchText {
-    margin-left: 25%;
-    width: 40%;
-    border-radius: 10px;
+  margin-left: 25%;
+  width: 40%;
+  border-radius: 10px;
 }
 
 #searchSubmit {
-    padding: 0 20px;
-    background: orange;
-    border-radius: 10px;
+  padding: 0 20px;
+  background: orange;
+  border-radius: 10px;
 }
 
 .dropdown {
-    width: 100%;
-    margin-left: 25%;
+  width: 100%;
+  margin-left: 25%;
 }
 
 .dropdown > button {
-    margin-top: 20px;
-    background: orange;
-    padding: 5px 10px;
+  margin-top: 20px;
+  background: orange;
+  padding: 5px 10px;
 }
 
-#playerInfo{
-    display: grid;
-    justify-content: start;
-    grid-gap: 30px;
-    grid-template-columns: auto auto auto;
+#playerInfo {
+  display: grid;
+  justify-content: start;
+  grid-gap: 30px;
+  grid-template-columns: auto auto auto;
 }
 
 #playerIcon {
-    width: 100px;
-    height: 100px;
-    grid-column: 1/2;
+  width: 100px;
+  height: 100px;
+  grid-column: 1/2;
 }
 
-#playerName{
-    font-size: 1.5em;
+#playerName {
+  font-size: 1.5em;
+}
+
+#isLive {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: darkred;
+}
+
+table.PerformanceTable {
+  table-layout: fixed;
+  /* width: 500px; */
+}
+table.PerformanceTable td.PerformanceCell {
+  width: 75px;
+}
+table {
+  /* cellspacing */
+  align-self: center;
+  width: 100%;
+  background-color: darkgrey;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 5px;
+}
+
+tr {
+  /* This covers the tr elements */
+  padding: 10px;
+}
+th,
+td {
+    text-align: center;
+  /* cellpadding */
+  /* padding: 10px; */
+  
 }
