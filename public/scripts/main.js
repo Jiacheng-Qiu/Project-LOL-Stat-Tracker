@@ -25,6 +25,7 @@ rhit.AccountController = class {
   constructor() {
     // Adjust user text according to stat
     if (rhit.fbAuthManager.isSignedIn) {
+      document.querySelector("#accountDrawer").disabled = false;
       document.querySelector("#loginInfo").textContent =
         "Currently logged in as: " + rhit.fbAuthManager.uid;
     } else {
@@ -41,6 +42,8 @@ rhit.AccountController = class {
         console.log("login redirect");
         window.location.href = "/login.html";
       };
+
+      document.querySelector("#accountDrawer").disabled = true;
     }
 
     document.querySelector("#submitEditPass").onclick = (event) => {
@@ -75,6 +78,29 @@ rhit.ListPageController = class {
       window.location.href = "/search.html";
     };
 
+    // TODO: list user's favorites if there is any
+    // First check if the user is logged in
+    if (rhit.fbAuthManager.isSignedIn){
+      let favList = firebase.firestore().collection("Users").doc(rhit.fbAuthManager.uid);
+      let favContainer = htmlToElement('<div id="favContainer"></div>');
+      for (let fav in favList){
+        let favCard = htmlToElement(`
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${fav.player}</h5>
+              </div>
+            </div>`);
+        favCard.onclick = (event) => {
+            window.location.href = `/detail.html?region=${fav.region}&summoner=${fav.name}`;
+        };
+        favContainer.appendChild(favCard);
+      }
+      const oldFav = document.querySelector("#favContainer");
+      oldFav.removeAttribute("id");
+      oldFav.hidden = true;
+      oldFav.parentElement.appendChild(favList);
+    }
+    
     new rhit.AccountController();
   }
 };
@@ -152,7 +178,6 @@ rhit.SearchPageController = class {
             window.location.href = `/detail.html?region=${region}&summoner=${result.data.name}`;
         };
         const oldCard = document.querySelector("#searchResult");
-        console.log(oldCard);
         oldCard.removeAttribute("id");
         oldCard.hidden = true;
         oldCard.parentElement.appendChild(newCard);
@@ -176,15 +201,24 @@ rhit.DetailPageController = class {
     let urlParams = new URLSearchParams(window.location.search);
     rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region")).then(
         async (result) => {
-            //TODO: Fetch if the user have favorited the player
             // Refresh player info based on player action
+            let doesFollow = await firebase.functions().httpsCallable("doesFollow")({
+              summonerName: urlParams.get("summoner").trim().toLowerCase(),
+              region: urlParams.get("region").trim().toLowerCase()
+            });
+            let followIcon = "";
+            if (doesFollow.data["follows"]){
+              followIcon = "favorite";
+            } else {
+              followIcon = "favorite_border";
+            }
             const newCard = htmlToElement(`
                 <div id="playerInfo">       
                     <img src="//raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${result.data.profileIconId}.jpg" id="playerIcon">
                     <div id="Profile">
                         <div class="Information">
                             <span id="playerName">${result.data.name}</span>
-                            <a type="button" class="btn btn-primary" id="favoriteButton" disabled><i class="material-icons">favorite_border</i></a>
+                            <a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">${followIcon}</i></a>
                         </div>
                         <button type="button" class="btn btn-primary" id="refreshButton"><i class="material-icons">update</i>Refresh</button>
                     </div>
@@ -264,16 +298,57 @@ rhit.DetailPageController = class {
             oldMatch.parentElement.appendChild(matchList);
         
             // TODO: Favorite and unfavorite
-            document.querySelector("#favoriteButton").onclick = (event) => {
+            
+            let favButtonEvent = async(event) => {
+              // First disable the button
+              document.querySelector("#favoriteButton").disabled = true;
+
               let urlParams = new URLSearchParams(window.location.search);
               let region = urlParams.get("region").trim().toLowerCase();
               let summoner = urlParams.get("summoner").trim().toLowerCase();
         
-              firebase.functions().httpsCallable("doesFollow")({
+              let doesFollow = await firebase.functions().httpsCallable("doesFollow")({
                 summonerName: summoner,
                 region,
               });
+              console.log(doesFollow);
+              // If the user already follows the player, unfollow and change button
+              if (doesFollow.data["follows"]) {
+                console.log('unfollowing');
+                firebase.functions().httpsCallable("unfollowPlayer")({
+                  summonerName: summoner,
+                  region,
+                }).then(function () {
+                  let newButton = htmlToElement(`<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite_border</i></a>`);
+                  const oldButton = document.querySelector("#favoriteButton");
+                  oldButton.removeAttribute("id");
+                  oldButton.hidden = true;
+                  newButton.onclick = favButtonEvent;
+                  oldButton.parentElement.appendChild(newButton);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              } else {
+                console.log('following');
+                firebase.functions().httpsCallable("followPlayer")({
+                  summonerName: summoner,
+                  region,
+                }).then(function () {
+                  let newButton = htmlToElement(`<a type="button" class="btn btn-primary" id="favoriteButton"><i class="material-icons">favorite</i></a>`);
+                  const oldButton = document.querySelector("#favoriteButton");
+                  oldButton.removeAttribute("id");
+                  oldButton.hidden = true;
+                  newButton.onclick = favButtonEvent;
+                  oldButton.parentElement.appendChild(newButton);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              }
             };
+
+            document.querySelector("#favoriteButton").onclick = favButtonEvent;
         
             document.querySelector("#refreshButton").onclick = (event) => {
               location.reload();
