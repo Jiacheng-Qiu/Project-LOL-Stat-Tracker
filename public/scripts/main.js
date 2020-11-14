@@ -87,25 +87,62 @@ rhit.ListPageController = class {
         .doc(rhit.fbAuthManager.uid)
         .get()
         .then((res) => res.data())
-        .then((res) => {})
+        .then(async (res) => {
+          let favoritesRaw = res["favorites"];
+          let favorites = {};
+          await Promise.all(
+            favoritesRaw.map(async (rawFav) => {
+              try {
+                let sum = await firebase
+                  .firestore()
+                  .collection("Summoners")
+                  .doc(rawFav)
+                  .get();
+                favorites[rawFav] = sum.data();
+              } catch (err) {
+                console.log("Err fetching summoner", err);
+              }
+            })
+          );
+
+          console.log("favs", favorites);
+          let favContainer = document.querySelector("#favContainer");
+          for (let fav in favorites) {
+            let data = favorites[fav];
+            let name = data.name;
+            let region = fav.replace(name.trim().toLowerCase(), "");
+            console.warn(name);
+            console.warn(region);
+            let favCard = htmlToElement(`
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">${name}</h5>
+                    </div>
+                  </div>`);
+            favCard.onclick = (event) => {
+              window.location.href = `/detail.html?region=${region}&summoner=${name}`;
+            };
+            favContainer.appendChild(favCard);
+          }
+        })
         .catch((err) => console.log(err));
-      let favContainer = htmlToElement('<div id="favContainer"></div>');
-      for (let fav in favList) {
-        let favCard = htmlToElement(`
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">${fav.player}</h5>
-              </div>
-            </div>`);
-        favCard.onclick = (event) => {
-          window.location.href = `/detail.html?region=${fav.region}&summoner=${fav.name}`;
-        };
-        favContainer.appendChild(favCard);
-      }
-      const oldFav = document.querySelector("#favContainer");
-      oldFav.removeAttribute("id");
-      oldFav.hidden = true;
-      oldFav.parentElement.appendChild(favList);
+      // let favContainer = htmlToElement('<div id="favContainer"></div>');
+      // for (let fav in favList) {
+      //   let favCard = htmlToElement(`
+      //       <div class="card">
+      //         <div class="card-body">
+      //           <h5 class="card-title">${fav.player}</h5>
+      //         </div>
+      //       </div>`);
+      //   favCard.onclick = (event) => {
+      //     window.location.href = `/detail.html?region=${fav.region}&summoner=${fav.name}`;
+      //   };
+      //   favContainer.appendChild(favCard);
+      // }
+      // const oldFav = document.querySelector("#favContainer");
+      // oldFav.removeAttribute("id");
+      // oldFav.hidden = true;
+      // oldFav.parentElement.appendChild(favList);
     }
 
     new rhit.AccountController();
