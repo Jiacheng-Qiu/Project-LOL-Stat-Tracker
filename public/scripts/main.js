@@ -199,7 +199,7 @@ rhit.DetailPageController = class {
     };
 
     let urlParams = new URLSearchParams(window.location.search);
-    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region")).then(
+    rhit.fetchPlayer(urlParams.get("summoner").trim().toLowerCase(), urlParams.get("region").trim().toLowerCase()).then(
         async (result) => {
             // Refresh player info based on player action
             let doesFollow = await firebase.functions().httpsCallable("doesFollow")({
@@ -228,6 +228,14 @@ rhit.DetailPageController = class {
             oldCard.hidden = true;
             oldCard.parentElement.appendChild(newCard);
 
+            let isLiveCard = document.querySelector("#isLive");
+            let isLive = result.data.isLive;
+            if(isLive) {
+              isLiveCard.innerHTML = "Live right now!";
+            } else {
+              isLiveCard.innerHTML = "";
+            }
+
             // Refresh match history
             const matchesData = firebase.firestore().collection("Matches");
             const matchList = htmlToElement(`<div id="matchHistory"></div>`);
@@ -238,15 +246,10 @@ rhit.DetailPageController = class {
                 var matchDetail = await matchesData.doc(result.data.recentMatches[i]).get();
                 var recentMatch = htmlToElement(`<div class="card"></div>`);
                 
-                var playerList = htmlToElement(`
-                <div class="collapse" id="${result.data.recentMatches[i]}">
-                    <div class="card-body"style="border-radius: 10px;"> Champion
-                      &nbsp;&nbsp;&nbsp;&nbsp;Summoner
-                      &nbsp;&nbsp;&nbsp;&nbsp;KDA
-                      &nbsp;&nbsp;&nbsp;&nbsp;Damage
-                      &nbsp;&nbsp;&nbsp;&nbsp;Gold
-                    </div>
-                </div>`);
+
+                let playerList = ""
+
+                // playerListOuter.innerHTML = playerList
                 let waaak = matchDetail.data().participants;
                 var matchTime = timeSince(matchDetail.data().gameCreation) + " ago"
 
@@ -277,18 +280,41 @@ rhit.DetailPageController = class {
                     } else {
                       color = "ee9b9b";
                     }
-                    playerList.appendChild(htmlToElement(`
-                      <div class="card-body" style="background-color:#${color}; border-radius: 10px;">${CHAMPION[waaak[key].gameData.championId]}
-                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].player.summonerName}
-                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}
-                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.totalDamageDealtToChampions}
-                        &nbsp;&nbsp;&nbsp;&nbsp;${waaak[key].gameData.stats.goldEarned}</div>
-                      `));
+                    
+                    playerList +=`
+                      <tr class="card-body" style="background-color:#${color}; border-radius: 10px;">
+                        <td>${CHAMPION[waaak[key].gameData.championId]}</td>
+                        <td>
+                          <a 
+                            href="/detail.html?region=${urlParams.get("region").trim().toLowerCase()}&summoner=${waaak[key].player.summonerName}"
+                          >
+                            ${waaak[key].player.summonerName}
+                          <a>
+                        </td>
+                        <td>${waaak[key].gameData.stats.kills}/${waaak[key].gameData.stats.deaths}/${waaak[key].gameData.stats.assists}</td>
+                        <td>${waaak[key].gameData.stats.totalDamageDealtToChampions}</td>
+                        <td>${waaak[key].gameData.stats.goldEarned}</td>
+                      </tr>
+                      `;
                     if (playerCounter == 5){
-                      playerList.appendChild(htmlToElement(`<hr><hr>`));
+                      playerList += `<tr><td>&nbsp;</td></tr>`;
                     }
                 };
-                recentMatch.appendChild(playerList);
+                let playerListHTML =  htmlToElement(`
+                   <div class="collapse" id="${result.data.recentMatches[i]}">
+                    <table id="match${result.data.recentMatches[i]}">
+                      <tr>
+                        <th>Champion</th>
+                        <th>Summoner</th>
+                        <th>KDA</th>
+                        <th>Damage</th>
+                        <th>Gold</th>
+                      </tr>
+                      ${playerList}
+                    </table>
+                   </div>`);
+                
+                recentMatch.appendChild(playerListHTML);
                 matchList.appendChild(recentMatch);
             }
 
